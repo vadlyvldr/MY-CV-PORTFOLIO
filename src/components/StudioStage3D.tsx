@@ -219,14 +219,14 @@ export function StudioStage3D({ theme, triggerRef }: StudioStage3DProps) {
     };
     window.addEventListener("resize", handleResize);
 
-    const clock = new THREE.Clock();
+    const startMs = performance.now();
     let rafId = 0;
 
     const tick = () => {
       rafId = window.requestAnimationFrame(tick);
       if (!isVisible || document.hidden) return;
 
-      const elapsed = clock.getElapsedTime();
+      const elapsed = (performance.now() - startMs) * 0.001;
       pointer.currentX += (pointer.targetX - pointer.currentX) * 0.045;
       pointer.currentY += (pointer.targetY - pointer.currentY) * 0.045;
 
