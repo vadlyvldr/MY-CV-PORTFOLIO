@@ -61,7 +61,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${bricolage.variable} ${instrumentSerif.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
+      className={`dark ${bricolage.variable} ${instrumentSerif.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-white">
         {children}

@@ -5,7 +5,7 @@ import { Moon, Sun } from "lucide-react";
 import { Locale, ThemeMode } from "@/types/cv";
 
 const LOCALE_KEY = "vadlycv_locale";
-const THEME_KEY = "vadlycv_theme";
+const THEME_KEY = "vadlycv_theme_v2";
 const PREFS_EVENT = "vadlycv-prefs-updated";
 
 function subscribe(callback: () => void) {
@@ -29,15 +29,15 @@ function getLocaleSnapshot(): Locale {
 function getThemeSnapshot(): ThemeMode {
   try {
     const val = localStorage.getItem(THEME_KEY);
-    return val === "dark" ? "dark" : "light";
+    return val === "light" ? "light" : "dark";
   } catch {
-    return "light";
+    return "dark";
   }
 }
 
 export function usePreferences() {
   const locale = useSyncExternalStore(subscribe, getLocaleSnapshot, (): Locale => "en");
-  const theme = useSyncExternalStore(subscribe, getThemeSnapshot, (): ThemeMode => "light");
+  const theme = useSyncExternalStore(subscribe, getThemeSnapshot, (): ThemeMode => "dark");
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -53,7 +53,7 @@ export function usePreferences() {
   };
 
   const toggleTheme = () => {
-    const next: ThemeMode = theme === "light" ? "dark" : "light";
+    const next: ThemeMode = theme === "dark" ? "light" : "dark";
     try {
       localStorage.setItem(THEME_KEY, next);
       window.dispatchEvent(new Event(PREFS_EVENT));
@@ -112,10 +112,10 @@ export function ThemeLangControls({
       <button
         type="button"
         onClick={onToggleTheme}
-        aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+        aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
         className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-muted)] transition cursor-pointer"
       >
-        {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+        {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
       </button>
     </div>
   );

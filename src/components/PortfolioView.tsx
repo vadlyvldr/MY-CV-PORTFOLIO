@@ -23,7 +23,6 @@ import {
   pickText,
 } from "@/types/cv";
 import { notifyDraftUpdated, useCvDraftPreview } from "@/lib/use-cv-draft";
-import { AiPipelineVisual, ShortFormReelVisual } from "./CaseVisuals";
 import { ThemeLangControls, usePreferences } from "./ThemeLangControls";
 import { VideoModal } from "./VideoModal";
 
@@ -50,7 +49,7 @@ const UI_COPY = {
     filterAudio: "Audio & Photo",
     filterAi: "AI Workflows",
     playPreview: "Play Video",
-    openChannel: "Open Clip",
+    openChannel: "Open Source",
     expTitle: "Experience &",
     expTitleItalic: "Track Record",
     toolsTitle: "Production Tools &",
@@ -85,7 +84,7 @@ const UI_COPY = {
     filterAudio: "Audio & Foto",
     filterAi: "AI Workflow",
     playPreview: "Putar Video",
-    openChannel: "Buka Klip",
+    openChannel: "Buka Tautan",
     expTitle: "Pengalaman &",
     expTitleItalic: "Rekam Jejak",
     toolsTitle: "Software Produksi &",
@@ -114,38 +113,118 @@ const DISCIPLINE_MARQUEE = [
   "Commercial Photography",
 ];
 
-function renderCaseVisual(
-  cs: CaseStudyItem,
-  locale: Locale,
-  playLabel: string,
-  onPlay: (id: string, title: string) => void
-) {
-  if (cs.visualVariant === "reel-frame") {
-    return <ShortFormReelVisual item={cs} locale={locale} />;
-  }
-  if (cs.visualVariant === "ai-pipeline") {
-    return <AiPipelineVisual locale={locale} />;
-  }
+function CaseStudyCard({
+  cs,
+  index,
+  locale,
+  copy,
+  onPlayVideo,
+}: {
+  cs: CaseStudyItem;
+  index: number;
+  locale: Locale;
+  copy: (typeof UI_COPY)["en"] | (typeof UI_COPY)["id"];
+  onPlayVideo: (id: string, title: string) => void;
+}) {
+  const hasRealMedia = Boolean(cs.thumbnail);
+  const indexLabel = String(index + 1).padStart(2, "0");
 
   return (
-    <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={cs.thumbnail || "/images/port-audio-podcast.jpg"}
-        alt={pickText(cs.title, locale)}
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-      />
-      {cs.youtubeId && (
-        <button
-          type="button"
-          onClick={() => onPlay(cs.youtubeId!, pickText(cs.title, locale))}
-          className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-black/85 text-white text-xs font-semibold hover:bg-[var(--accent)] hover:text-white transition cursor-pointer"
-        >
-          <Play className="w-3.5 h-3.5 fill-current" />
-          <span>{playLabel}</span>
-        </button>
+    <article className="group rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] overflow-hidden flex flex-col justify-between transition hover:border-[var(--accent)]">
+      {hasRealMedia ? (
+        <div className="relative aspect-video bg-[var(--bg-panel)] overflow-hidden border-b border-[var(--border-color)]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={cs.thumbnail}
+            alt={pickText(cs.title, locale)}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+          {cs.youtubeId && (
+            <button
+              type="button"
+              onClick={() => onPlayVideo(cs.youtubeId!, pickText(cs.title, locale))}
+              className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-black/85 text-white text-xs font-semibold hover:bg-[var(--accent)] hover:text-[var(--accent-ink)] transition cursor-pointer"
+            >
+              <Play className="w-3.5 h-3.5 fill-current" />
+              <span>{copy.playPreview}</span>
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-2 flex items-baseline justify-between gap-4 border-b border-[var(--border-color)]/60">
+          <span className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--accent)] tabular-nums">
+            {indexLabel}
+          </span>
+          <span className="font-mono-tech text-[11px] font-medium text-[var(--text-muted)] text-right truncate">
+            {cs.reelMeta?.handle || pickText(cs.impact, locale)}
+          </span>
+        </div>
       )}
-    </>
+
+      <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between gap-5">
+        <div className="space-y-2.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+            <span className="font-semibold text-[var(--accent)]">
+              {pickText(cs.tag, locale)}
+            </span>
+            <span className="font-mono-tech text-[11px] font-medium text-[var(--success)]">
+              {pickText(cs.impact, locale)}
+            </span>
+          </div>
+
+          <h3 className="font-display text-lg sm:text-xl font-bold text-[var(--text-primary)] leading-snug">
+            {pickText(cs.title, locale)}
+          </h3>
+
+          <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+            {pickText(cs.summary, locale)}
+          </p>
+        </div>
+
+        <div className="space-y-3 pt-3 border-t border-[var(--border-color)]">
+          {cs.tools.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {cs.tools.map((tool) => (
+                <span
+                  key={tool}
+                  className="px-2.5 py-1 rounded-md bg-[var(--bg-page)] border border-[var(--border-color)] text-[11px] font-medium text-[var(--text-secondary)]"
+                >
+                  {tool}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {(cs.primaryUrl || (cs.extraLinks && cs.extraLinks.length > 0)) && (
+            <div className="flex flex-wrap gap-2">
+              {cs.primaryUrl && (
+                <a
+                  href={cs.primaryUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 h-8 px-3 rounded-lg bg-[var(--accent-soft)] text-[var(--accent)] text-xs font-semibold hover:opacity-85 transition"
+                >
+                  <span>{copy.openChannel}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {cs.extraLinks?.map((link) => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 h-8 px-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-page)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-xs font-medium transition"
+                >
+                  <span>{pickText(link.label, locale)}</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </article>
   );
 }
 
@@ -224,7 +303,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
             href="/"
             className="inline-flex items-baseline gap-2 shrink-0 text-[var(--text-primary)]"
           >
-            <span className="font-display text-xl font-extrabold tracking-tight">
+            <span className="font-display text-2xl font-extrabold tracking-tight">
               {data.profile.nickname}
             </span>
             <span className="hidden sm:inline font-serif-accent italic text-base text-[var(--text-muted)]">
@@ -321,23 +400,23 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
       </header>
 
       <main className="flex-1">
-        {/* ASYMMETRIC CREATIVE DIRECTOR HERO */}
+        {/* BALANCED DIRECTOR HERO */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-14 sm:pt-16 sm:pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             <div className="lg:col-span-7 space-y-6 order-2 lg:order-1">
               <div className="inline-flex items-center gap-2 text-xs font-medium text-[var(--text-secondary)]">
                 <span className="w-2 h-2 rounded-full bg-[var(--success)] shrink-0" />
                 <span>{pickText(data.profile.availabilityBadge, locale)}</span>
               </div>
 
-              <div className="space-y-3">
-                <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.75rem] font-extrabold tracking-[-0.03em] leading-[1.03] text-[var(--text-primary)]">
-                  Muhammad Ryan{" "}
-                  <span className="font-serif-accent italic font-normal text-[var(--accent)]">
-                    Fadliansyah
+              <div className="space-y-2.5">
+                <h1 className="font-display text-5xl sm:text-6xl lg:text-[4.5rem] font-extrabold tracking-[-0.03em] leading-[0.98] text-[var(--text-primary)]">
+                  {data.profile.nickname}{" "}
+                  <span className="block font-serif-accent italic font-normal text-2xl sm:text-3xl lg:text-4xl text-[var(--accent)] mt-2 tracking-normal">
+                    {data.profile.fullName}
                   </span>
                 </h1>
-                <p className="text-lg sm:text-xl font-semibold text-[var(--text-primary)]">
+                <p className="text-lg sm:text-xl font-semibold text-[var(--text-primary)] pt-1">
                   {pickText(data.profile.headline, locale)}
                 </p>
               </div>
@@ -357,7 +436,6 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                 </span>
               </div>
 
-              {/* Balanced Equal-Height Primary Actions */}
               <div className="flex flex-wrap items-center gap-3 pt-1">
                 <Link
                   href="/cv"
@@ -384,7 +462,6 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                 </a>
               </div>
 
-              {/* Typographic Fact Strip (Replaces generic boxed hero metrics) */}
               {data.sections.showMetrics && data.metrics.length > 0 && (
                 <div className="pt-6 border-t border-[var(--border-color)] grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
                   {data.metrics.map((metric) => (
@@ -404,30 +481,19 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
               )}
             </div>
 
-            {/* Studio Portrait Plate */}
+            {/* Clean Studio Portrait — No tiny/awkward caption bar underneath */}
             <div className="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="w-full max-w-[300px] sm:max-w-[350px] space-y-2.5">
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-[#111113] border border-[var(--border-color)] shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={data.profile.avatarUrl || "/images/profile-main.png"}
-                    alt={data.profile.fullName}
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
-                <div className="flex items-center justify-between text-xs px-1">
-                  <span className="font-display font-bold text-[var(--text-primary)]">
-                    {data.profile.nickname}
-                  </span>
-                  <span className="font-mono-tech text-[11px] text-[var(--text-muted)]">
-                    CREATIVE PRODUCER
-                  </span>
-                </div>
+              <div className="w-full max-w-[300px] sm:max-w-[370px] aspect-[4/5] rounded-2xl overflow-hidden bg-[#0b0b0d] border border-[var(--border-color)] shadow-lg">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={data.profile.avatarUrl || "/images/profile-main.png"}
+                  alt={data.profile.fullName}
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
             </div>
           </div>
 
-          {/* Verified Published Channels */}
           {data.sections.showChannels && visibleChannels.length > 0 && (
             <div className="mt-12 pt-8 border-t border-[var(--border-color)]">
               <p className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-3">
@@ -485,7 +551,6 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                   </span>
                 </h2>
 
-                {/* Editorial Underline Tabs — single clean hairline bar */}
                 <div
                   role="tablist"
                   aria-label="Work categories"
@@ -517,81 +582,15 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                {visibleCaseStudies.map((cs) => (
-                  <article
+                {visibleCaseStudies.map((cs, idx) => (
+                  <CaseStudyCard
                     key={cs.id}
-                    className="group rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] overflow-hidden flex flex-col transition hover:border-[var(--text-muted)]"
-                  >
-                    <div className="relative aspect-[16/10] bg-[var(--bg-stage)] overflow-hidden border-b border-[var(--border-color)]">
-                      {renderCaseVisual(cs, locale, copy.playPreview, (id, title) =>
-                        setActiveVideo({ id, title })
-                      )}
-                    </div>
-
-                    <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between gap-5">
-                      <div className="space-y-2.5">
-                        <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                          <span className="font-semibold text-[var(--accent)]">
-                            {pickText(cs.tag, locale)}
-                          </span>
-                          <span className="font-mono-tech text-[11px] font-medium text-[var(--success)]">
-                            {pickText(cs.impact, locale)}
-                          </span>
-                        </div>
-
-                        <h3 className="font-display text-lg sm:text-xl font-bold text-[var(--text-primary)] leading-snug">
-                          {pickText(cs.title, locale)}
-                        </h3>
-
-                        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                          {pickText(cs.summary, locale)}
-                        </p>
-                      </div>
-
-                      <div className="space-y-3 pt-3 border-t border-[var(--border-color)]">
-                        {cs.tools.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5">
-                            {cs.tools.map((tool) => (
-                              <span
-                                key={tool}
-                                className="px-2.5 py-1 rounded-md bg-[var(--bg-page)] border border-[var(--border-color)] text-[11px] font-medium text-[var(--text-secondary)]"
-                              >
-                                {tool}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-
-                        {(cs.primaryUrl || (cs.extraLinks && cs.extraLinks.length > 0)) && (
-                          <div className="flex flex-wrap gap-2">
-                            {cs.primaryUrl && (
-                              <a
-                                href={cs.primaryUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 h-8 px-3 rounded-lg bg-[var(--accent-soft)] text-[var(--accent)] text-xs font-semibold hover:opacity-85 transition"
-                              >
-                                <span>{copy.openChannel}</span>
-                                <ArrowUpRight className="w-3.5 h-3.5" />
-                              </a>
-                            )}
-                            {cs.extraLinks?.map((link) => (
-                              <a
-                                key={link.url}
-                                href={link.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 h-8 px-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-page)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-xs font-medium transition"
-                              >
-                                <span>{pickText(link.label, locale)}</span>
-                                <ArrowUpRight className="w-3 h-3" />
-                              </a>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </article>
+                    cs={cs}
+                    index={idx}
+                    locale={locale}
+                    copy={copy}
+                    onPlayVideo={(id, title) => setActiveVideo({ id, title })}
+                  />
                 ))}
               </div>
             </div>
@@ -649,7 +648,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
           </section>
         )}
 
-        {/* TOOLS SPECIFICATION MATRIX & LANGUAGES */}
+        {/* TOOLS MATRIX & LANGUAGES */}
         {data.sections.showTools && (
           <section id="tools" className="border-t border-[var(--border-color)] py-16 sm:py-24">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
@@ -667,11 +666,9 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                       key={group.id}
                       className="border-r border-b border-[var(--border-color)] bg-[var(--bg-surface)] p-5 sm:p-6 space-y-3"
                     >
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono-tech text-[11px] text-[var(--accent)] font-semibold">
-                          0{idx + 1}
-                        </span>
-                      </div>
+                      <span className="font-mono-tech text-[11px] text-[var(--accent)] font-semibold block">
+                        0{idx + 1}
+                      </span>
                       <h3 className="font-display text-sm font-bold text-[var(--text-primary)]">
                         {pickText(group.title, locale)}
                       </h3>
@@ -685,7 +682,6 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                 </div>
               </div>
 
-              {/* Languages & Working Setup — Zero Paket C Exposure */}
               <div className="pt-4 border-t border-[var(--border-color)] grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
                 <div className="md:col-span-5">
                   <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-[-0.02em] text-[var(--text-primary)]">

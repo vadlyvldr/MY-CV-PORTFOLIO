@@ -1,34 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --bg-page: #f6f5f1;
+  /* Harmonized Light Studio (Stone Paper + Deep Ink + Warm Bronze) */
+  --bg-page: #f2f1ed;
   --bg-surface: #ffffff;
-  --bg-subtle: #eceae3;
-  --bg-stage: #141416;
+  --bg-subtle: #e7e5dd;
+  --bg-panel: #eae8e0;
   --text-primary: #141413;
-  --text-secondary: #4a4945;
-  --text-muted: #76746e;
-  --border-color: #e2dfd7;
-  --accent: #b8431b;
-  --accent-hover: #993513;
-  --accent-soft: rgba(184, 67, 27, 0.1);
+  --text-secondary: #42413d;
+  --text-muted: #6e6c66;
+  --border-color: #dcd9d0;
+  --accent: #8f5222;
+  --accent-hover: #744118;
+  --accent-soft: rgba(143, 82, 34, 0.1);
   --accent-ink: #ffffff;
   --success: #0e7a53;
 }
 
 html.dark {
-  --bg-page: #0d0d0f;
-  --bg-surface: #151518;
-  --bg-subtle: #1f1f24;
-  --bg-stage: #09090b;
-  --text-primary: #f4f3ee;
-  --text-secondary: #c5c3bc;
-  --text-muted: #8b8982;
-  --border-color: #26262b;
-  --accent: #ec6d42;
-  --accent-hover: #f28661;
-  --accent-soft: rgba(236, 109, 66, 0.14);
-  --accent-ink: #0d0d0f;
+  /* Default Cinema Obsidian Studio (Matches B&W Portrait Seamlessly) */
+  --bg-page: #0b0b0d;
+  --bg-surface: #131317;
+  --bg-subtle: #1c1c22;
+  --bg-panel: #16161b;
+  --text-primary: #f3f2ee;
+  --text-secondary: #bfbdb5;
+  --text-muted: #88867f;
+  --border-color: #25252c;
+  --accent: #dfa066;
+  --accent-hover: #eab582;
+  --accent-soft: rgba(223, 160, 102, 0.14);
+  --accent-ink: #0b0b0d;
   --success: #34d399;
 }
 
