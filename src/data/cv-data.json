@@ -17,8 +17,8 @@
       "id": "Jakarta, Indonesia"
     },
     "bio": {
-      "en": "Creative Producer combining 5+ years of video directing, short-form retention editing, studio audio engineering, and operations management. Scaled Hoki Jaya Motor from zero to 120K+ TikTok followers and 5M+ organic views, launched monetized YouTube music channels, and integrate AI workflows to speed up delivery.",
-      "id": "Creative Producer dengan 5+ tahun pengalaman mengarahkan produksi video, editing short-form, rekayasa audio studio, dan manajemen operasional. Membangun TikTok Hoki Jaya Motor hingga 120K+ followers & 5M+ views organik, merintis channel musik YouTube termonetisasi, serta mengintegrasikan AI workflow."
+      "en": "Creative Producer combining 5+ years of video directing, short-form retention editing, studio audio engineering, and operations management. Scaled Hoki Jaya Motor from zero to 120K+ TikTok followers and 5M+ organic views, produced commercial reels for SanDisk (@eaonlineofficial), launched monetized YouTube music channels, and built AI-powered web tools like Malesan (malesan.my.id).",
+      "id": "Creative Producer dengan 5+ tahun pengalaman mengarahkan produksi video, editing short-form, rekayasa audio studio, dan manajemen operasional. Membangun TikTok Hoki Jaya Motor hingga 120K+ followers & 5M+ views organik, memproduksi konten komersial SanDisk (@eaonlineofficial), merintis channel musik YouTube termonetisasi, serta membangun web AI seperti Malesan (malesan.my.id)."
     },
     "targetLocation": {
       "en": "Remote Worldwide / Amsterdam, Netherlands",
@@ -159,6 +159,45 @@
         }
       ],
       "tools": ["Adobe Premiere Pro", "CapCut", "Hook Architecture"]
+    },
+    {
+      "id": "cs-sandisk-eaonline",
+      "category": "short-form",
+      "visualVariant": "reel-frame",
+      "reelMeta": {
+        "handle": "@eaonlineofficial • SanDisk",
+        "hookCue": {
+          "en": "Commercial • SanDisk Phone Drive",
+          "id": "Komersial • SanDisk Phone Drive"
+        },
+        "durationLabel": "Brand Reel",
+        "ratioLabel": "9:16 TikTok",
+        "aspectNote": {
+          "en": "Commercial TikTok showcase produced for EAONLINE Official featuring SanDisk Phone Drive.",
+          "id": "Video TikTok komersial produk SanDisk Phone Drive untuk akun resmi EAONLINE Official."
+        }
+      },
+      "visible": true,
+      "featured": true,
+      "tag": {
+        "en": "Brand Commercial • TikTok",
+        "id": "Iklan Produk Brand • TikTok"
+      },
+      "title": {
+        "en": "SanDisk Phone Drive (@eaonlineofficial) — Brand Video",
+        "id": "SanDisk Phone Drive (@eaonlineofficial) — Video Komersial TikTok"
+      },
+      "summary": {
+        "en": "Produced commercial short-form TikTok video highlighting SanDisk Phone Drive mobile storage workflows for official hardware distributor EAONLINE (@eaonlineofficial).",
+        "id": "Memproduksi video short-form komersial TikTok untuk produk SanDisk Phone Drive di kanal resmi distributor EAONLINE Official (@eaonlineofficial)."
+      },
+      "impact": {
+        "en": "Published brand campaign",
+        "id": "Rilis kampanye komersial"
+      },
+      "thumbnail": "",
+      "primaryUrl": "https://vt.tiktok.com/ZSs6TdjHb/",
+      "tools": ["Adobe Premiere Pro", "CapCut", "Commercial Short-Form"]
     },
     {
       "id": "cs-hjm-tiktok-1",
@@ -407,9 +446,44 @@
       "tools": ["Vocal Performance", "Studio One DAW", "Color Grading"]
     },
     {
+      "id": "cs-malesan-app",
+      "category": "ai-workflow",
+      "visualVariant": "image",
+      "visible": true,
+      "featured": true,
+      "tag": {
+        "en": "AI SaaS & Creator Suite • Live Product",
+        "id": "SaaS AI & Suite Kreator • Produk Live"
+      },
+      "title": {
+        "en": "Malesan (malesan.my.id) — AI Creative Companion & Video Engine",
+        "id": "Malesan (malesan.my.id) — AI Creative Companion & Video Engine"
+      },
+      "summary": {
+        "en": "Full-stack AI creator platform engineered with Next.js 16, Supabase, FFmpeg, MediaPipe, and Groq Whisper. Automates 3-angle viral ideation, 3-second hook writing, script generation, YouTube-to-9:16 Reels auto-clipping with word-level synced captions, AI voiceover/TTS, English speaking coach, and Telegram bot workflows across Web, Windows (.exe), and Android (.apk).",
+        "id": "Platform kreator full-stack yang dibangun dengan Next.js 16, Supabase, FFmpeg, MediaPipe, dan Groq Whisper. Mengotomasi riset ide viral 3 sudut pandang, penulisan hook 3 detik & naskah, auto-clipping YouTube ke Reels 9:16 lengkap dengan subtitle sinkron per kata, AI voiceover/TTS, latihan speaking, hingga integrasi Telegram bot untuk Web, Windows (.exe), & Android (.apk)."
+      },
+      "impact": {
+        "en": "Shipped Web, Desktop & Android SaaS",
+        "id": "Rilis Live Web, Desktop & Android"
+      },
+      "thumbnail": "/images/malesan-app.webp",
+      "primaryUrl": "https://www.malesan.my.id",
+      "extraLinks": [
+        {
+          "label": {
+            "en": "Open Workspace",
+            "id": "Buka Workspace"
+          },
+          "url": "https://www.malesan.my.id/masuk"
+        }
+      ],
+      "tools": ["Next.js 16", "Supabase", "FFmpeg & MediaPipe", "Groq Whisper", "AI TTS & Telegram"]
+    },
+    {
       "id": "cs-ai-workflow",
       "category": "ai-workflow",
-      "visualVariant": "ai-pipeline",
+      "visualVariant": "image",
       "visible": true,
       "featured": true,
       "tag": {
@@ -421,14 +495,24 @@
         "id": "Alur Produksi AI: Voiceover, Skrip & Web Tooling"
       },
       "summary": {
-        "en": "Daily practitioner of ElevenLabs for AI voice prototyping alongside agentic tools (Antigravity, Claude Code, OpenAI Codex, Hermes Agent) to build web apps and accelerate production turnaround. Commercial AI ad case studies are currently in active production.",
-        "id": "Aktif menggunakan ElevenLabs untuk prototipe voiceover/audio AI serta coding agent (Antigravity, Claude Code, Codex, Hermes Agent) untuk membangun aplikasi web dan mempercepat siklus konten. Studi kasus iklan berbasis AI sedang dalam produksi."
+        "en": "Daily practitioner of ElevenLabs for AI voice prototyping alongside agentic coding tools (Antigravity, Claude Code, OpenAI Codex, Hermes Agent) to build full-stack web products like Malesan (malesan.my.id), bilingual roadmaps, and modular CMS tools that speed up creative turnaround.",
+        "id": "Menggunakan ElevenLabs untuk prototipe voiceover/audio AI serta coding agent (Antigravity, Claude Code, OpenAI Codex, Hermes Agent) untuk membangun aplikasi web utuh seperti Malesan (malesan.my.id), peta studi bilingual, dan sistem CMS portofolio guna mempercepat siklus produksi."
       },
       "impact": {
         "en": "Faster audio, script & web shipping",
         "id": "Iterasi cepat audio, skrip & web"
       },
-      "thumbnail": "",
+      "thumbnail": "/images/ai-studio-workflow.jpg",
+      "primaryUrl": "https://www.malesan.my.id",
+      "extraLinks": [
+        {
+          "label": {
+            "en": "Netherlands Prep App",
+            "id": "Web Persiapan Belanda"
+          },
+          "url": "https://fadligoestoeurope.vercel.app"
+        }
+      ],
       "tools": ["ElevenLabs", "Antigravity", "Claude Code", "Codex", "Hermes Agent"]
     },
     {
@@ -502,11 +586,13 @@
       "bullets": {
         "en": [
           "Grew Hoki Jaya Motor TikTok (@hjm_hokijayamotor) and Instagram (@hokijaya_motor) from 0 to 120K+ followers and 5M+ organic views through retention-led short-form video.",
+          "Produced commercial short-form product video for SanDisk Phone Drive featured on EAONLINE Official (@eaonlineofficial).",
           "Launched and produced multi-cam music sessions for Damay Musik Subang and Project DMP from zero to full YouTube monetization.",
           "Executed solo end-to-end production as well as coordinated multi-person filming and post-production schedules."
         ],
         "id": [
           "Membangun akun TikTok (@hjm_hokijayamotor) & Instagram (@hokijaya_motor) Hoki Jaya Motor dari 0 hingga 120K+ followers dan 5 Juta+ views organik.",
+          "Memproduksi video komersial produk SanDisk Phone Drive untuk kanal TikTok resmi distributor EAONLINE Official (@eaonlineofficial).",
           "Merintis dan memproduksi sesi musik multi-kamera untuk Damay Musik Subang & Project DMP dari nol hingga sukses termonetisasi di YouTube.",
           "Mampu mengeksekusi proyek secara solo end-to-end maupun memimpin tim produksi."
         ]
@@ -530,12 +616,14 @@
       },
       "bullets": {
         "en": [
+          "Built Malesan (malesan.my.id), a full-stack AI creative companion SaaS (Next.js 16, Supabase, FFmpeg, MediaPipe, Groq Whisper, TTS) featuring viral hook/script generation, YouTube-to-9:16 auto-clipping, synced captions, and Telegram bot automation.",
           "Integrated ElevenLabs, Antigravity, Claude Code, OpenAI Codex, and Hermes Agent into daily media pipelines and rapid prototyping workflows.",
-          "Built functional custom web applications and modular portfolio tooling tailored for fast iteration."
+          "Shipped cross-platform client builds (Web, Windows, Android) and custom portfolio CMS tooling tailored for rapid iteration."
         ],
         "id": [
+          "Membangun Malesan (malesan.my.id), aplikasi SaaS AI Creative Companion full-stack (Next.js 16, Supabase, FFmpeg, MediaPipe, Groq Whisper, TTS) untuk riset hook/naskah, auto-clipping YouTube ke 9:16, subtitle otomatis, dan integrasi Telegram bot.",
           "Mengintegrasikan ElevenLabs, Antigravity, Claude Code, OpenAI Codex, dan Hermes Agent ke dalam pipeline media serta prototipe cepat.",
-          "Membangun aplikasi web kustom dan sistem portofolio modular yang mudah dikembangkan."
+          "Merilis build lintas platform (Web, Windows, Android) serta sistem CMS portofolio modular yang mudah dikembangkan."
         ]
       }
     },
@@ -742,6 +830,7 @@
         "Claude Code",
         "OpenAI Codex",
         "Hermes Agent",
+        "Next.js & Supabase Web Apps",
         "Creative Workflow Prototyping"
       ]
     },
