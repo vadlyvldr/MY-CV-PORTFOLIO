@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
   ArrowUpRight,
+  ChevronDown,
   FileText,
   Globe,
   Mail,
@@ -43,15 +44,20 @@ const UI_COPY = {
     channelsLabel: "Verified Channels",
     workTitle: "Selected Work &",
     workTitleItalic: "Production",
-    filterAll: "All Works",
+    filterAll: "All",
+    filterFeatured: "Highlights",
     filterShort: "Short-Form",
     filterYoutube: "YouTube & Live",
     filterAudio: "Audio & Photo",
     filterAi: "AI & Web Apps",
+    groupReelsLabel: "Short-Form & Brand Campaigns",
+    groupVisualLabel: "YouTube, AI Products & Studio",
     playPreview: "Play Video",
     openChannel: "Open Source",
     expTitle: "Experience &",
     expTitleItalic: "Track Record",
+    showMoreExp: "View 4 earlier roles (Video Editor, D'Kopian Cafe Manager, Audio & Photo)",
+    showLessExp: "Show recent 4 roles",
     toolsTitle: "Production Tools &",
     toolsTitleItalic: "AI Stack",
     langTitle: "Languages &",
@@ -79,14 +85,19 @@ const UI_COPY = {
     workTitle: "Karya Terpilih &",
     workTitleItalic: "Produksi",
     filterAll: "Semua",
+    filterFeatured: "Unggulan",
     filterShort: "Short-Form",
     filterYoutube: "YouTube & Live",
     filterAudio: "Audio & Foto",
     filterAi: "AI & Web App",
+    groupReelsLabel: "Kampanye Short-Form & Reels",
+    groupVisualLabel: "YouTube, Produk AI & Studio",
     playPreview: "Putar Video",
     openChannel: "Buka Tautan",
     expTitle: "Pengalaman &",
     expTitleItalic: "Rekam Jejak",
+    showMoreExp: "Lihat 4 riwayat lain (Video Editor, Manajer D'Kopian Cafe, Audio & Foto)",
+    showLessExp: "Tampilkan 4 peran terbaru",
     toolsTitle: "Software Produksi &",
     toolsTitleItalic: "Ekosistem AI",
     langTitle: "Bahasa &",
@@ -130,14 +141,14 @@ function CaseStudyCard({
   const indexLabel = String(index + 1).padStart(2, "0");
 
   return (
-    <article className="group rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] overflow-hidden flex flex-col justify-between transition hover:border-[var(--accent)]">
+    <article className="group rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] overflow-hidden flex flex-col transition hover:border-[var(--accent)] shadow-[0_8px_30px_-18px_rgba(0,0,0,0.45)]">
       {hasRealMedia ? (
-        <div className="relative aspect-video bg-[var(--bg-panel)] overflow-hidden border-b border-[var(--border-color)]">
+        <div className="relative aspect-video bg-[#0b0b0d] overflow-hidden border-b border-[var(--border-color)]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={cs.thumbnail}
             alt={pickText(cs.title, locale)}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
           />
           {cs.youtubeId && (
             <button
@@ -151,9 +162,9 @@ function CaseStudyCard({
           )}
         </div>
       ) : (
-        <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-3.5 flex items-center justify-between gap-3 border-b border-[var(--border-color)]/60 bg-[var(--bg-panel)]/45">
-          <div className="inline-flex items-baseline gap-2.5 shrink-0">
-            <span className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--accent)] tabular-nums">
+        <div className="px-5 pt-4 pb-3 flex items-center justify-between gap-3 border-b border-[var(--border-color)]/60 bg-[var(--bg-panel)]/55">
+          <div className="inline-flex items-center gap-2.5 shrink-0">
+            <span className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--accent)] tabular-nums leading-none">
               {indexLabel}
             </span>
             {cs.reelMeta?.ratioLabel && (
@@ -168,9 +179,9 @@ function CaseStudyCard({
         </div>
       )}
 
-      <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between gap-5">
-        <div className="space-y-2.5">
-          <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+      <div className="p-5 flex-1 flex flex-col justify-between gap-4">
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs">
             <span className="font-semibold text-[var(--accent)]">
               {pickText(cs.tag, locale)}
             </span>
@@ -179,16 +190,16 @@ function CaseStudyCard({
             </span>
           </div>
 
-          <h3 className="font-display text-lg sm:text-xl font-bold text-[var(--text-primary)] leading-snug">
+          <h3 className="font-display text-base sm:text-lg font-bold text-[var(--text-primary)] leading-snug">
             {pickText(cs.title, locale)}
           </h3>
 
-          <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+          <p className="text-[13.5px] sm:text-sm text-[var(--text-secondary)] leading-relaxed">
             {pickText(cs.summary, locale)}
           </p>
         </div>
 
-        <div className="space-y-3 pt-3 border-t border-[var(--border-color)]">
+        <div className="space-y-3 pt-3 border-t border-[var(--border-color)]/80">
           {cs.tools.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {cs.tools.map((tool) => (
@@ -238,8 +249,9 @@ function CaseStudyCard({
 export function PortfolioView({ initialData }: PortfolioViewProps) {
   const { locale, setLocale, theme, toggleTheme } = usePreferences();
   const { data, isDraftPreview } = useCvDraftPreview(initialData);
-  const [category, setCategory] = useState<"all" | CaseStudyCategory>("all");
+  const [category, setCategory] = useState<"featured" | "all" | CaseStudyCategory>("featured");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showAllExperiences, setShowAllExperiences] = useState(false);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
   const copy = UI_COPY[locale as Locale];
@@ -252,18 +264,37 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
   const visibleCaseStudies = useMemo(() => {
     const active = data.caseStudies.filter((item) => item.visible);
     if (category === "all") return active;
+    if (category === "featured") {
+      const flagged = active.filter((item) => item.featured);
+      return flagged.length > 0 ? flagged : active.slice(0, 6);
+    }
     return active.filter((item) => item.category === category);
   }, [data.caseStudies, category]);
+
+  const reelCaseStudies = useMemo(
+    () => visibleCaseStudies.filter((item) => !item.thumbnail),
+    [visibleCaseStudies]
+  );
+  const visualCaseStudies = useMemo(
+    () => visibleCaseStudies.filter((item) => Boolean(item.thumbnail)),
+    [visibleCaseStudies]
+  );
 
   const visibleExperiences = useMemo(
     () => data.experiences.filter((exp) => exp.visible),
     [data.experiences]
   );
 
-  const filterTabs: { id: "all" | CaseStudyCategory; label: string; count: number }[] = useMemo(() => {
+  const displayedExperiences = useMemo(
+    () => (showAllExperiences ? visibleExperiences : visibleExperiences.slice(0, 4)),
+    [visibleExperiences, showAllExperiences]
+  );
+
+  const filterTabs: { id: "featured" | "all" | CaseStudyCategory; label: string; count: number }[] = useMemo(() => {
     const active = data.caseStudies.filter((i) => i.visible);
+    const featuredCount = active.filter((i) => i.featured).length || Math.min(6, active.length);
     return [
-      { id: "all", label: copy.filterAll, count: active.length },
+      { id: "featured", label: copy.filterFeatured, count: featuredCount },
       {
         id: "short-form",
         label: copy.filterShort,
@@ -275,15 +306,16 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
         count: active.filter((i) => i.category === "youtube").length,
       },
       {
-        id: "audio-photo",
-        label: copy.filterAudio,
-        count: active.filter((i) => i.category === "audio-photo").length,
-      },
-      {
         id: "ai-workflow",
         label: copy.filterAi,
         count: active.filter((i) => i.category === "ai-workflow").length,
       },
+      {
+        id: "audio-photo",
+        label: copy.filterAudio,
+        count: active.filter((i) => i.category === "audio-photo").length,
+      },
+      { id: "all", label: copy.filterAll, count: active.length },
     ];
   }, [data.caseStudies, copy]);
 
@@ -408,27 +440,27 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
 
       <main className="flex-1">
         {/* BALANCED DIRECTOR HERO */}
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-14 sm:pt-16 sm:pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            <div className="lg:col-span-7 space-y-6 order-2 lg:order-1">
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 sm:pt-14 sm:pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-10 lg:gap-12 items-center">
+            <div className="lg:col-span-7 space-y-5 sm:space-y-6 order-2 lg:order-1">
               <div className="inline-flex items-center gap-2 text-xs font-medium text-[var(--text-secondary)]">
                 <span className="w-2 h-2 rounded-full bg-[var(--success)] shrink-0" />
                 <span>{pickText(data.profile.availabilityBadge, locale)}</span>
               </div>
 
-              <div className="space-y-2.5">
+              <div className="space-y-2">
                 <h1 className="font-display text-5xl sm:text-6xl lg:text-[4.5rem] font-extrabold tracking-[-0.03em] leading-[0.98] text-[var(--text-primary)]">
                   {data.profile.nickname}{" "}
-                  <span className="block font-serif-accent italic font-normal text-2xl sm:text-3xl lg:text-4xl text-[var(--accent)] mt-2 tracking-normal">
+                  <span className="block font-serif-accent italic font-normal text-2xl sm:text-3xl lg:text-4xl text-[var(--accent)] mt-1.5 sm:mt-2 tracking-normal">
                     {data.profile.fullName}
                   </span>
                 </h1>
-                <p className="text-lg sm:text-xl font-semibold text-[var(--text-primary)] pt-1">
+                <p className="text-base sm:text-xl font-semibold text-[var(--text-primary)] pt-0.5">
                   {pickText(data.profile.headline, locale)}
                 </p>
               </div>
 
-              <p className="text-[15.5px] sm:text-base text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+              <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed max-w-2xl">
                 {pickText(data.profile.bio, locale)}
               </p>
 
@@ -443,17 +475,17 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                 </span>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 pt-1">
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
                 <Link
                   href="/cv"
-                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--accent-ink)] text-sm font-semibold transition"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-4 sm:px-5 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--accent-ink)] text-sm font-semibold transition"
                 >
                   <FileText className="w-4 h-4" />
                   <span>{copy.downloadCv}</span>
                 </Link>
                 <a
                   href="#contact"
-                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-[var(--text-primary)] text-[var(--text-primary)] text-sm font-semibold transition"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-4 sm:px-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-[var(--text-primary)] text-[var(--text-primary)] text-sm font-semibold transition"
                 >
                   <Mail className="w-4 h-4" />
                   <span>{copy.contactMe}</span>
@@ -462,7 +494,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                   href={data.profile.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-[var(--text-primary)] text-[var(--text-primary)] text-sm font-semibold transition"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-4 sm:px-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-[var(--text-primary)] text-[var(--text-primary)] text-sm font-semibold transition"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>{copy.whatsApp}</span>
@@ -470,16 +502,16 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
               </div>
 
               {data.sections.showMetrics && data.metrics.length > 0 && (
-                <div className="pt-6 border-t border-[var(--border-color)] grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
+                <div className="pt-5 border-t border-[var(--border-color)] grid grid-cols-3 gap-3 sm:gap-6">
                   {data.metrics.map((metric) => (
-                    <div key={metric.id} className="space-y-0.5">
-                      <div className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text-primary)] tabular-nums">
+                    <div key={metric.id} className="space-y-0.5 min-w-0">
+                      <div className="font-display text-xl sm:text-3xl font-extrabold tracking-tight text-[var(--text-primary)] tabular-nums">
                         {metric.value}
                       </div>
-                      <div className="text-xs font-bold text-[var(--text-primary)]">
+                      <div className="text-[11px] sm:text-xs font-bold text-[var(--text-primary)] leading-tight">
                         {pickText(metric.label, locale)}
                       </div>
-                      <div className="text-xs text-[var(--text-muted)]">
+                      <div className="hidden sm:block text-xs text-[var(--text-muted)]">
                         {pickText(metric.sub, locale)}
                       </div>
                     </div>
@@ -490,7 +522,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
 
             {/* Clean Studio Portrait — No tiny/awkward caption bar underneath */}
             <div className="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="w-full max-w-[300px] sm:max-w-[370px] aspect-[4/5] rounded-2xl overflow-hidden bg-[#0b0b0d] border border-[var(--border-color)] shadow-lg">
+              <div className="w-full max-w-[216px] sm:max-w-[330px] lg:max-w-[370px] aspect-[4/5] rounded-2xl overflow-hidden bg-[#0b0b0d] border border-[var(--border-color)] shadow-[0_24px_75px_-28px_rgba(223,160,102,0.24)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={data.profile.avatarUrl || "/images/profile-main.png"}
@@ -502,24 +534,24 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
           </div>
 
           {data.sections.showChannels && visibleChannels.length > 0 && (
-            <div className="mt-12 pt-8 border-t border-[var(--border-color)]">
+            <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-[var(--border-color)]">
               <p className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-3">
                 {copy.channelsLabel}
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
                 {visibleChannels.map((ch) => (
                   <a
                     key={ch.id}
                     href={ch.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-[var(--accent)] transition"
+                    className="group flex items-center justify-between gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-[var(--accent)] transition"
                   >
                     <div className="min-w-0">
-                      <p className="text-[11px] font-medium text-[var(--text-muted)] truncate">
+                      <p className="text-[10.5px] sm:text-[11px] font-medium text-[var(--text-muted)] truncate">
                         {ch.label}
                       </p>
-                      <p className="text-sm font-bold text-[var(--text-primary)] truncate">
+                      <p className="text-xs sm:text-sm font-bold text-[var(--text-primary)] truncate">
                         {ch.handle}
                       </p>
                     </div>
@@ -548,9 +580,9 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
 
         {/* SELECTED WORK & CASE STUDIES */}
         {data.sections.showCaseStudies && (
-          <section id="work" className="py-16 sm:py-24">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-              <div className="space-y-6">
+          <section id="work" className="py-12 sm:py-20">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+              <div className="space-y-5">
                 <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold tracking-[-0.025em] text-[var(--text-primary)]">
                   {copy.workTitle}{" "}
                   <span className="font-serif-accent italic font-normal text-[var(--accent)]">
@@ -561,7 +593,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                 <div
                   role="tablist"
                   aria-label="Work categories"
-                  className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-[var(--border-color)]"
+                  className="flex flex-wrap items-center gap-2"
                 >
                   {filterTabs.map((tab) => {
                     const active = category === tab.id;
@@ -572,14 +604,20 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                         role="tab"
                         aria-selected={active}
                         onClick={() => setCategory(tab.id)}
-                        className={`relative pb-3 text-[13px] sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer inline-flex items-center gap-1.5 ${
+                        className={`h-9 sm:h-10 px-3.5 sm:px-4 rounded-xl border text-xs sm:text-[13px] whitespace-nowrap transition cursor-pointer inline-flex items-center gap-2 ${
                           active
-                            ? "text-[var(--text-primary)] border-b-2 border-[var(--accent)] -mb-px"
-                            : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                            ? "bg-[var(--accent)] text-[var(--accent-ink)] border-[var(--accent)] font-bold shadow-sm"
+                            : "bg-[var(--bg-surface)] text-[var(--text-secondary)] border-[var(--border-color)] font-semibold hover:border-[var(--text-muted)] hover:text-[var(--text-primary)]"
                         }`}
                       >
                         <span>{tab.label}</span>
-                        <span className="font-mono-tech text-[11px] opacity-75">
+                        <span
+                          className={`font-mono-tech text-[11px] px-1.5 py-0.5 rounded-md leading-none ${
+                            active
+                              ? "bg-black/15 text-[var(--accent-ink)]"
+                              : "bg-[var(--bg-page)] text-[var(--text-muted)]"
+                          }`}
+                        >
                           {tab.count}
                         </span>
                       </button>
@@ -588,17 +626,56 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                {visibleCaseStudies.map((cs, idx) => (
-                  <CaseStudyCard
-                    key={cs.id}
-                    cs={cs}
-                    index={idx}
-                    locale={locale}
-                    copy={copy}
-                    onPlayVideo={(id, title) => setActiveVideo({ id, title })}
-                  />
-                ))}
+              <div className="space-y-10">
+                {reelCaseStudies.length > 0 && (
+                  <div className="space-y-4">
+                    {visualCaseStudies.length > 0 && (
+                      <p className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)]">
+                        {copy.groupReelsLabel}
+                      </p>
+                    )}
+                    <div
+                      className={`grid grid-cols-1 gap-5 sm:gap-6 items-start ${
+                        reelCaseStudies.length >= 3
+                          ? "md:grid-cols-2 lg:grid-cols-3"
+                          : "md:grid-cols-2"
+                      }`}
+                    >
+                      {reelCaseStudies.map((cs, idx) => (
+                        <CaseStudyCard
+                          key={cs.id}
+                          cs={cs}
+                          index={idx}
+                          locale={locale}
+                          copy={copy}
+                          onPlayVideo={(id, title) => setActiveVideo({ id, title })}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {visualCaseStudies.length > 0 && (
+                  <div className="space-y-4">
+                    {reelCaseStudies.length > 0 && (
+                      <p className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] pt-2">
+                        {copy.groupVisualLabel}
+                      </p>
+                    )}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                      {visualCaseStudies.map((cs, idx) => (
+                        <CaseStudyCard
+                          key={cs.id}
+                          cs={cs}
+                          index={reelCaseStudies.length + idx}
+                          locale={locale}
+                          copy={copy}
+                          onPlayVideo={(id, title) => setActiveVideo({ id, title })}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </section>
@@ -608,9 +685,9 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
         {data.sections.showExperience && (
           <section
             id="experience"
-            className="border-t border-[var(--border-color)] bg-[var(--bg-surface)] py-16 sm:py-24"
+            className="border-t border-[var(--border-color)] bg-[var(--bg-surface)] py-12 sm:py-20"
           >
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
               <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold tracking-[-0.025em] text-[var(--text-primary)]">
                 {copy.expTitle}{" "}
                 <span className="font-serif-accent italic font-normal text-[var(--accent)]">
@@ -619,10 +696,10 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
               </h2>
 
               <div className="divide-y divide-[var(--border-color)] border-y border-[var(--border-color)]">
-                {visibleExperiences.map((exp) => (
+                {displayedExperiences.map((exp) => (
                   <div
                     key={exp.id}
-                    className="py-6 sm:py-8 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8"
+                    className="py-5 sm:py-7 grid grid-cols-1 md:grid-cols-12 gap-2.5 md:gap-8"
                   >
                     <div className="md:col-span-4 space-y-1">
                       <p className="font-mono-tech text-xs font-medium text-[var(--accent)]">
@@ -635,11 +712,11 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                         {pickText(exp.type, locale)}
                       </p>
                     </div>
-                    <div className="md:col-span-8 space-y-2.5">
-                      <h3 className="font-display text-lg font-bold text-[var(--text-primary)]">
+                    <div className="md:col-span-8 space-y-2">
+                      <h3 className="font-display text-base sm:text-lg font-bold text-[var(--text-primary)]">
                         {pickText(exp.role, locale)}
                       </h3>
-                      <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                      <ul className="space-y-1.5 text-[13.5px] sm:text-sm text-[var(--text-secondary)]">
                         {pickList(exp.bullets, locale).map((bullet, idx) => (
                           <li key={idx} className="flex items-start gap-2.5 leading-relaxed">
                             <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[var(--accent)] shrink-0" />
@@ -651,6 +728,23 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                   </div>
                 ))}
               </div>
+
+              {visibleExperiences.length > 4 && (
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setShowAllExperiences((prev) => !prev)}
+                    className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-page)] hover:border-[var(--accent)] text-xs sm:text-sm font-semibold text-[var(--text-primary)] transition cursor-pointer"
+                  >
+                    <ChevronDown
+                      className={`w-4 h-4 text-[var(--accent)] transition-transform ${
+                        showAllExperiences ? "rotate-180" : ""
+                      }`}
+                    />
+                    <span>{showAllExperiences ? copy.showLessExp : copy.showMoreExp}</span>
+                  </button>
+                </div>
+              )}
             </div>
           </section>
         )}

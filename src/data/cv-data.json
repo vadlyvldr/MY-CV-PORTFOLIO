@@ -217,7 +217,7 @@
         }
       },
       "visible": true,
-      "featured": true,
+      "featured": false,
       "tag": {
         "en": "TikTok Clip #1 • Retention Edit",
         "id": "Klip TikTok #1 • Retensi Awal"
@@ -256,7 +256,7 @@
         }
       },
       "visible": true,
-      "featured": true,
+      "featured": false,
       "tag": {
         "en": "TikTok Clip #2 • Commercial Pacing",
         "id": "Klip TikTok #2 • Ritme Komersial"
@@ -460,14 +460,14 @@
         "id": "Malesan (malesan.my.id) — AI Creative Companion & Video Engine"
       },
       "summary": {
-        "en": "Full-stack AI creator platform engineered with Next.js 16, Supabase, FFmpeg, MediaPipe, and Groq Whisper. Automates 3-angle viral ideation, 3-second hook writing, script generation, YouTube-to-9:16 Reels auto-clipping with word-level synced captions, AI voiceover/TTS, English speaking coach, and Telegram bot workflows across Web, Windows (.exe), and Android (.apk).",
-        "id": "Platform kreator full-stack yang dibangun dengan Next.js 16, Supabase, FFmpeg, MediaPipe, dan Groq Whisper. Mengotomasi riset ide viral 3 sudut pandang, penulisan hook 3 detik & naskah, auto-clipping YouTube ke Reels 9:16 lengkap dengan subtitle sinkron per kata, AI voiceover/TTS, latihan speaking, hingga integrasi Telegram bot untuk Web, Windows (.exe), & Android (.apk)."
+        "en": "Full-stack Next.js 16 & Supabase AI platform automating 3-angle viral ideation, 3-second hooks, scripts, YouTube-to-Reels 9:16 clipping (FFmpeg, MediaPipe, Groq Whisper), AI voiceover/TTS, and Telegram bot workflows across Web, Desktop, and Android.",
+        "id": "Platform AI Next.js 16 & Supabase untuk riset ide 3 sudut pandang, hook 3 detik, penulisan naskah, auto-clipping YouTube ke Reels 9:16 (FFmpeg, MediaPipe, Groq Whisper), AI voiceover/TTS, serta Telegram bot di Web, Desktop, dan Android."
       },
       "impact": {
         "en": "Shipped Web, Desktop & Android SaaS",
         "id": "Rilis Live Web, Desktop & Android"
       },
-      "thumbnail": "/images/malesan-app.webp",
+      "thumbnail": "/images/malesan-app.png",
       "primaryUrl": "https://www.malesan.my.id",
       "extraLinks": [
         {
