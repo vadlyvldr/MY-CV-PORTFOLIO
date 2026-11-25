@@ -477,7 +477,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
         {data.sections.showCaseStudies && (
           <section id="work" className="py-16 sm:py-24">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="space-y-6">
                 <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold tracking-[-0.025em] text-[var(--text-primary)]">
                   {copy.workTitle}{" "}
                   <span className="font-serif-accent italic font-normal text-[var(--accent)]">
@@ -485,11 +485,11 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                   </span>
                 </h2>
 
-                {/* Editorial Underline Tabs (Replaces clunky SaaS pills) */}
+                {/* Editorial Underline Tabs — single clean hairline bar */}
                 <div
                   role="tablist"
                   aria-label="Work categories"
-                  className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-[var(--border-color)]"
+                  className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-[var(--border-color)]"
                 >
                   {filterTabs.map((tab) => {
                     const active = category === tab.id;
@@ -500,7 +500,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                         role="tab"
                         aria-selected={active}
                         onClick={() => setCategory(tab.id)}
-                        className={`relative pb-3 text-sm font-semibold transition cursor-pointer inline-flex items-center gap-1.5 ${
+                        className={`relative pb-3 text-[13px] sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer inline-flex items-center gap-1.5 ${
                           active
                             ? "text-[var(--text-primary)] border-b-2 border-[var(--accent)] -mb-px"
                             : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
