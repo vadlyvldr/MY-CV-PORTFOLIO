@@ -1,7 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   ArrowUpRight,
   ChevronDown,
@@ -26,6 +29,11 @@ import {
 import { notifyDraftUpdated, useCvDraftPreview } from "@/lib/use-cv-draft";
 import { ThemeLangControls, usePreferences } from "./ThemeLangControls";
 import { VideoModal } from "./VideoModal";
+
+const StudioStage3D = dynamic(
+  () => import("./StudioStage3D").then((mod) => mod.StudioStage3D),
+  { ssr: false }
+);
 
 interface PortfolioViewProps {
   initialData: CvProfileData;
@@ -141,7 +149,7 @@ function CaseStudyCard({
   const indexLabel = String(index + 1).padStart(2, "0");
 
   return (
-    <article className="group rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] overflow-hidden flex flex-col transition hover:border-[var(--accent)] shadow-[0_8px_30px_-18px_rgba(0,0,0,0.45)]">
+    <article className="scroll-depth-card group rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] overflow-hidden flex flex-col transition-all duration-300 hover:border-[var(--accent)] lg:hover:-translate-y-0.5 lg:hover:shadow-[0_20px_50px_-24px_rgba(223,160,102,0.24)] shadow-[0_8px_30px_-18px_rgba(0,0,0,0.45)]">
       {hasRealMedia ? (
         <div className="relative aspect-video bg-[#0b0b0d] overflow-hidden border-b border-[var(--border-color)]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -253,6 +261,59 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAllExperiences, setShowAllExperiences] = useState(false);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reducedMotion.matches) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      if (heroRef.current) {
+        gsap.from(heroRef.current.querySelectorAll(".hero-entrance"), {
+          y: 16,
+          opacity: 0,
+          duration: 0.55,
+          stagger: 0.06,
+          ease: "power3.out",
+          clearProps: "transform,opacity",
+        });
+      }
+      gsap.utils.toArray<HTMLElement>(".scroll-depth-card").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { y: 14 },
+          {
+            y: 0,
+            duration: 0.45,
+            ease: "power2.out",
+            clearProps: "transform",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      });
+    });
+
+    return () => ctx.revert();
+  }, [category, showAllExperiences]);
+
+  const handlePortraitPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse" || !portraitRef.current) return;
+    const rect = portraitRef.current.getBoundingClientRect();
+    const rx = ((e.clientY - rect.top) / rect.height - 0.5) * -5;
+    const ry = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
+    portraitRef.current.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) scale3d(1.01,1.01,1.01)`;
+  };
+
+  const resetPortraitTilt = () => {
+    if (!portraitRef.current) return;
+    portraitRef.current.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
+  };
 
   const copy = UI_COPY[locale as Locale];
 
@@ -439,16 +500,21 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
       </header>
 
       <main className="flex-1">
-        {/* BALANCED DIRECTOR HERO */}
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 sm:pt-14 sm:pb-16">
+        {/* BALANCED DIRECTOR HERO + LAYERED 3D STAGE ON DESKTOP */}
+        <section
+          ref={heroRef}
+          className="relative overflow-hidden"
+        >
+          <StudioStage3D theme={theme} triggerRef={heroRef} />
+          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 sm:pt-14 sm:pb-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-10 lg:gap-12 items-center">
             <div className="lg:col-span-7 space-y-5 sm:space-y-6 order-2 lg:order-1">
-              <div className="inline-flex items-center gap-2 text-xs font-medium text-[var(--text-secondary)]">
+              <div className="hero-entrance inline-flex items-center gap-2 text-xs font-medium text-[var(--text-secondary)]">
                 <span className="w-2 h-2 rounded-full bg-[var(--success)] shrink-0" />
                 <span>{pickText(data.profile.availabilityBadge, locale)}</span>
               </div>
 
-              <div className="space-y-2">
+              <div className="hero-entrance space-y-2">
                 <h1 className="font-display text-5xl sm:text-6xl lg:text-[4.5rem] font-extrabold tracking-[-0.03em] leading-[0.98] text-[var(--text-primary)]">
                   {data.profile.nickname}{" "}
                   <span className="block font-serif-accent italic font-normal text-2xl sm:text-3xl lg:text-4xl text-[var(--accent)] mt-1.5 sm:mt-2 tracking-normal">
@@ -460,11 +526,11 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                 </p>
               </div>
 
-              <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+              <p className="hero-entrance text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed max-w-2xl">
                 {pickText(data.profile.bio, locale)}
               </p>
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-[var(--text-muted)]">
+              <div className="hero-entrance flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-[var(--text-muted)]">
                 <span className="inline-flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[var(--accent)]" />
                   <span>{pickText(data.profile.location, locale)}</span>
@@ -475,7 +541,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                 </span>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
+              <div className="hero-entrance flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
                 <Link
                   href="/cv"
                   className="inline-flex items-center justify-center gap-2 h-11 px-4 sm:px-5 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--accent-ink)] text-sm font-semibold transition"
@@ -502,7 +568,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
               </div>
 
               {data.sections.showMetrics && data.metrics.length > 0 && (
-                <div className="pt-5 border-t border-[var(--border-color)] grid grid-cols-3 gap-3 sm:gap-6">
+                <div className="hero-entrance pt-5 border-t border-[var(--border-color)] grid grid-cols-3 gap-3 sm:gap-6">
                   {data.metrics.map((metric) => (
                     <div key={metric.id} className="space-y-0.5 min-w-0">
                       <div className="font-display text-xl sm:text-3xl font-extrabold tracking-tight text-[var(--text-primary)] tabular-nums">
@@ -520,9 +586,14 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
               )}
             </div>
 
-            {/* Clean Studio Portrait — No tiny/awkward caption bar underneath */}
-            <div className="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="w-full max-w-[216px] sm:max-w-[330px] lg:max-w-[370px] aspect-[4/5] rounded-2xl overflow-hidden bg-[#0b0b0d] border border-[var(--border-color)] shadow-[0_24px_75px_-28px_rgba(223,160,102,0.24)]">
+            {/* Clean Studio Portrait — Desktop subtle 3D pointer tilt + clean framing */}
+            <div className="hero-entrance lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end">
+              <div
+                ref={portraitRef}
+                onPointerMove={handlePortraitPointerMove}
+                onPointerLeave={resetPortraitTilt}
+                className="w-full max-w-[216px] sm:max-w-[330px] lg:max-w-[370px] aspect-[4/5] rounded-2xl overflow-hidden bg-[#0b0b0d] border border-[var(--border-color)] shadow-[0_24px_75px_-28px_rgba(223,160,102,0.28)] transition-transform duration-300 ease-out will-change-transform"
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={data.profile.avatarUrl || "/images/profile-main.png"}
@@ -561,6 +632,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
               </div>
             </div>
           )}
+          </div>
         </section>
 
         {/* Calm Discipline Strip */}
