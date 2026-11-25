@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import { describe, expect, it } from "vitest";
 import { extractYouTubeId, getDefaultCvData, validateCvData } from "./cv-data";
 import { createAdminSessionToken, verifyAdminSessionToken } from "./admin-auth";
@@ -9,8 +11,19 @@ describe("cv-data integrity & helpers", () => {
     const res = validateCvData(data);
     expect(res.ok).toBe(true);
     expect(data.profile.nickname).toBe("Fadli");
-    expect(data.caseStudies.length).toBeGreaterThanOrEqual(4);
-    expect(data.experiences.length).toBeGreaterThanOrEqual(5);
+    expect(data.caseStudies.filter((c) => c.category === "short-form" && c.visible).length).toBeGreaterThanOrEqual(4);
+    expect(data.caseStudies.filter((c) => c.category === "youtube" && c.visible).length).toBeGreaterThanOrEqual(3);
+    expect(JSON.stringify(data).toLowerCase()).not.toContain("paket c");
+  });
+
+  it("ensures all referenced case study thumbnails exist in public/", () => {
+    const data = getDefaultCvData();
+    for (const cs of data.caseStudies) {
+      if (cs.thumbnail && cs.thumbnail.startsWith("/")) {
+        const diskPath = path.join(process.cwd(), "public", cs.thumbnail.replace(/^\//, ""));
+        expect(fs.existsSync(diskPath)).toBe(true);
+      }
+    }
   });
 
   it("rejects invalid payloads", () => {

@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.0",
   "updatedAt": "2026-11-26",
   "profile": {
     "fullName": "Muhammad Ryan Fadliansyah",
@@ -9,16 +9,16 @@
       "id": "Creative Producer & Strategi Konten Video Berbasis AI"
     },
     "availabilityBadge": {
-      "en": "Open to Global Remote & EU Relocation (Netherlands)",
-      "id": "Terbuka untuk Kerja Remote Global & Relokasi Eropa (Belanda)"
+      "en": "Available for Remote Teams & EU Relocation",
+      "id": "Tersedia untuk Tim Remote Global & Relokasi Eropa"
     },
     "location": {
       "en": "Jakarta, Indonesia",
       "id": "Jakarta, Indonesia"
     },
     "bio": {
-      "en": "Creative Producer with 5+ years of hands-on experience in short-form social video, YouTube channel launches, studio audio engineering, and live broadcasting. Scaled Hoki Jaya Motor from zero to 120K+ TikTok followers and 5M+ organic views, launched & monetized music YouTube channels, and use modern AI workflows (ElevenLabs, Antigravity, Claude Code, Codex) to speed up creative delivery.",
-      "id": "Creative Producer dengan 5+ tahun pengalaman langsung di produksi video short-form, pengembangan channel YouTube dari nol hingga monetisasi, rekayasa audio studio, dan siaran live. Membangun akun TikTok Hoki Jaya Motor hingga 120K+ followers & 5M+ views organik, serta mengintegrasikan AI workflow (ElevenLabs, Antigravity, Claude Code, Codex) untuk mempercepat eksekusi konten."
+      "en": "Creative Producer combining 5+ years of directing, short-form pacing, studio audio engineering, and live broadcasting. Scaled Hoki Jaya Motor from zero to 120K+ TikTok followers and 5M+ organic views, launched & monetized music YouTube channels, and build faster production pipelines using AI workflows.",
+      "id": "Creative Producer dengan 5+ tahun pengalaman mengarahkan produksi video short-form, peluncuran channel YouTube, rekayasa audio studio, dan siaran live. Membangun TikTok Hoki Jaya Motor hingga 120K+ followers & 5M+ views organik serta mempercepat pipeline produksi dengan workflow AI."
     },
     "targetLocation": {
       "en": "Remote Worldwide / Amsterdam, Netherlands",
@@ -37,7 +37,7 @@
     "showCaseStudies": true,
     "showExperience": true,
     "showTools": true,
-    "showEducation": true
+    "showEducation": false
   },
   "metrics": [
     {
@@ -60,15 +60,15 @@
         "id": "Views Organik Short-Form"
       },
       "sub": {
-        "en": "Retention-focused hooks, editing & social strategy",
-        "id": "Strategi hook, editing cepat & distribusi sosial"
+        "en": "Retention hooks, pacing & multi-platform reels",
+        "id": "Optimasi hook, ritme edit & distribusi reels"
       }
     },
     {
       "id": "m-years",
       "value": "5+ Yrs",
       "label": {
-        "en": "Video, Audio & Live Ops",
+        "en": "Video, Audio & Live Production",
         "id": "Tahun Produksi Video & Audio"
       },
       "sub": {
@@ -113,63 +113,183 @@
   ],
   "caseStudies": [
     {
-      "id": "cs-hjm-shortform",
+      "id": "cs-hjm-growth",
       "category": "short-form",
+      "visualVariant": "reel-frame",
+      "reelMeta": {
+        "handle": "@hjm_hokijayamotor",
+        "hookCue": {
+          "en": "Channel Engine • 0 to 120K+",
+          "id": "Mesin Channel • 0 ke 120K+"
+        },
+        "durationLabel": "00:35 • 60fps",
+        "ratioLabel": "9:16 VERTICAL",
+        "aspectNote": {
+          "en": "Full short-form content calendar & organic reach funnel",
+          "id": "Kalender konten short-form penuh & funnel organik"
+        }
+      },
       "visible": true,
       "featured": true,
       "tag": {
-        "en": "Short-Form Growth • Automotive Retail",
-        "id": "Pertumbuhan Short-Form • Otomotif"
+        "en": "Short-Form Strategy • Account Build",
+        "id": "Strategi Short-Form • Bangun Akun"
       },
       "title": {
-        "en": "Hoki Jaya Motor — 0 to 120K+ Followers & 5M+ Views",
-        "id": "Hoki Jaya Motor — 0 ke 120K+ Followers & 5M+ Views"
+        "en": "Hoki Jaya Motor — Organic Growth System (120K+ Followers)",
+        "id": "Hoki Jaya Motor — Sistem Pertumbuhan Organik (120K+ Followers)"
       },
       "summary": {
-        "en": "End-to-end short-form video strategy, filming, pacing, and hook optimization across TikTok (@hjm_hokijayamotor) and Instagram Reels (@hokijaya_motor).",
-        "id": "Produksi video pendek end-to-end mulai dari ide, pengambilan gambar, editing cepat, hingga optimasi hook retensi di TikTok (@hjm_hokijayamotor) dan Instagram (@hokijaya_motor)."
+        "en": "Built the automotive dealer's TikTok & Instagram presence from scratch through repeatable hook formulas, fast-cut mobile edits, and audience comment triggers.",
+        "id": "Membangun akun TikTok & Instagram dealer otomotif dari nol lewat formula hook yang konsisten, ritme cut cepat, dan interaksi komentar audiens."
       },
       "impact": {
-        "en": "120K+ followers & 5M+ organic views",
-        "id": "120K+ followers & 5 Juta+ views organik"
+        "en": "120K+ followers & 5M+ views",
+        "id": "120K+ followers & 5M+ views"
       },
-      "thumbnail": "/images/port-design-sosmed.jpg",
+      "thumbnail": "",
       "primaryUrl": "https://www.tiktok.com/@hjm_hokijayamotor",
       "extraLinks": [
         {
           "label": {
-            "en": "TikTok Clip 1",
-            "id": "Video TikTok 1"
-          },
-          "url": "https://vt.tiktok.com/ZSQ4AHscS/"
-        },
-        {
-          "label": {
-            "en": "TikTok Clip 2",
-            "id": "Video TikTok 2"
-          },
-          "url": "https://vt.tiktok.com/ZSQ4xhr9R/"
-        },
-        {
-          "label": {
-            "en": "TikTok Clip 3",
-            "id": "Video TikTok 3"
-          },
-          "url": "https://vt.tiktok.com/ZSQ4xP97M/"
-        },
-        {
-          "label": {
-            "en": "Instagram Profile",
-            "id": "Profil Instagram"
+            "en": "Instagram @hokijaya_motor",
+            "id": "Instagram @hokijaya_motor"
           },
           "url": "https://www.instagram.com/hokijaya_motor/"
         }
       ],
-      "tools": ["Adobe Premiere Pro", "CapCut", "TikTok Strategy"]
+      "tools": ["Adobe Premiere Pro", "CapCut", "Hook Architecture"]
+    },
+    {
+      "id": "cs-hjm-tiktok-1",
+      "category": "short-form",
+      "visualVariant": "reel-frame",
+      "reelMeta": {
+        "handle": "@hjm_hokijayamotor",
+        "hookCue": {
+          "en": "Clip 01 • 3-Sec Pattern Interrupt",
+          "id": "Klip 01 • Hook 3 Detik Pertama"
+        },
+        "durationLabel": "00:28 • REEL",
+        "ratioLabel": "9:16 VERTICAL",
+        "aspectNote": {
+          "en": "Direct visual open designed to stop mobile thumb-scroll",
+          "id": "Pembukaan visual langsung untuk menahan scroll audiens"
+        }
+      },
+      "visible": true,
+      "featured": true,
+      "tag": {
+        "en": "TikTok Case #1 • Retention Hook",
+        "id": "Studi TikTok #1 • Retensi Awal"
+      },
+      "title": {
+        "en": "HJM Short-Form Feature I — Scroll-Stopping Opener",
+        "id": "HJM Short-Form I — Pembuka Penghenti Scroll"
+      },
+      "summary": {
+        "en": "Structured the opening three seconds with visual contrast, punchy subtitle timing, and concise product storytelling tailored for high completion rates.",
+        "id": "Merancang 3 detik pertama dengan kontras visual, timing subtitle presisi, dan storytelling produk singkat untuk menjaga tingkat tonton tuntas."
+      },
+      "impact": {
+        "en": "High completion & share velocity",
+        "id": "Retensi tinggi & distribusi organik"
+      },
+      "thumbnail": "",
+      "primaryUrl": "https://vt.tiktok.com/ZSQ4AHscS/",
+      "tools": ["CapCut", "Sound Design", "Retention Pacing"]
+    },
+    {
+      "id": "cs-hjm-tiktok-2",
+      "category": "short-form",
+      "visualVariant": "reel-frame",
+      "reelMeta": {
+        "handle": "@hjm_hokijayamotor",
+        "hookCue": {
+          "en": "Clip 02 • Rapid Commercial Cut",
+          "id": "Klip 02 • Ritme Iklan Cepat"
+        },
+        "durationLabel": "00:24 • REEL",
+        "ratioLabel": "9:16 VERTICAL",
+        "aspectNote": {
+          "en": "Beat-synced B-roll showcase for fast inventory turnover",
+          "id": "B-roll sinkron beat untuk promosi unit cepat laku"
+        }
+      },
+      "visible": true,
+      "featured": true,
+      "tag": {
+        "en": "TikTok Case #2 • Commercial Pacing",
+        "id": "Studi TikTok #2 • Ritme Komersial"
+      },
+      "title": {
+        "en": "HJM Short-Form Feature II — Unit Showcase & Rhythm",
+        "id": "HJM Short-Form II — Showcase Produk & Ritme Beat"
+      },
+      "summary": {
+        "en": "Fast-paced vertical edit combining crisp detail shots, dynamic motion transitions, and direct buyer callouts without feeling over-produced.",
+        "id": "Editing vertikal bertempo cepat memadukan detail kamera rapat, transisi dinamis, dan ajakan beli yang natural untuk pembeli mobile."
+      },
+      "impact": {
+        "en": "Direct retail inquiry driver",
+        "id": "Pendorong trafik chat calon pembeli"
+      },
+      "thumbnail": "",
+      "primaryUrl": "https://vt.tiktok.com/ZSQ4xhr9R/",
+      "tools": ["Adobe Premiere Pro", "DSLR / Mirrorless", "Beat Sync"]
+    },
+    {
+      "id": "cs-hjm-tiktok-3",
+      "category": "short-form",
+      "visualVariant": "reel-frame",
+      "reelMeta": {
+        "handle": "@hokijaya_motor",
+        "hookCue": {
+          "en": "Clip 03 • TikTok × IG Reels Funnel",
+          "id": "Klip 03 • Distribusi TikTok × IG"
+        },
+        "durationLabel": "00:31 • REEL",
+        "ratioLabel": "9:16 VERTICAL",
+        "aspectNote": {
+          "en": "Cross-platform vertical asset adapted for TikTok & Instagram",
+          "id": "Aset vertikal lintas platform untuk TikTok & Instagram Reels"
+        }
+      },
+      "visible": true,
+      "featured": false,
+      "tag": {
+        "en": "TikTok & IG Reels • Cross-Channel",
+        "id": "TikTok & IG Reels • Lintas Kanal"
+      },
+      "title": {
+        "en": "HJM Short-Form Feature III — Multi-Platform Reels Delivery",
+        "id": "HJM Short-Form III — Distribusi Multi-Platform Reels"
+      },
+      "summary": {
+        "en": "Repurposed vertical narrative with platform-safe margins, tailored captions, and cross-posting cadence between TikTok and Instagram.",
+        "id": "Adaptasi format vertikal dengan safe-zone rapi, penyesuaian gaya teks, serta ritme unggah silang antara TikTok dan Instagram Reels."
+      },
+      "impact": {
+        "en": "Consistent cross-app discovery",
+        "id": "Jangkauan konsisten di dua aplikasi"
+      },
+      "thumbnail": "",
+      "primaryUrl": "https://vt.tiktok.com/ZSQ4xP97M/",
+      "extraLinks": [
+        {
+          "label": {
+            "en": "IG Reels Feed",
+            "id": "Feed IG Reels"
+          },
+          "url": "https://www.instagram.com/hokijaya_motor/"
+        }
+      ],
+      "tools": ["CapCut", "Cross-Platform Formatting", "Canva"]
     },
     {
       "id": "cs-damay-singkong",
       "category": "youtube",
+      "visualVariant": "image",
       "visible": true,
       "featured": true,
       "tag": {
@@ -181,12 +301,12 @@
         "id": "Damay Musik Subang — Rintis dari Nol hingga Monetisasi"
       },
       "summary": {
-        "en": "Managed multi-camera video production, audio-visual synchronization, and YouTube packaging for live band & vocal cover releases on Damay Musik Subang & partner releases.",
-        "id": "Menangani produksi video multi-kamera, sinkronisasi audio-visual, dan pengemasan rilisan musik live session di Damay Musik Subang hingga channel sukses termonetisasi."
+        "en": "Managed multi-camera video production, audio-visual sync, and YouTube packaging for live band & vocal sessions including Singkong dan Keju and Nemen.",
+        "id": "Menggarap produksi video multi-kamera, sinkronisasi audio-visual, dan pengemasan YouTube untuk sesi live band seperti Singkong dan Keju serta Nemen hingga sukses monetisasi."
       },
       "impact": {
-        "en": "Monetized channel built from scratch",
-        "id": "Channel sukses termonetisasi dari nol"
+        "en": "Built from 0 to full monetization",
+        "id": "Dirintis dari nol hingga monetisasi"
       },
       "thumbnail": "/images/yt-damay-singkong.jpg",
       "youtubeId": "yiLrKFxtcwE",
@@ -201,14 +321,14 @@
         },
         {
           "label": {
-            "en": "Live Session: Nemen",
+            "en": "Nemen Live Session",
             "id": "Live Session: Nemen"
           },
           "url": "https://www.youtube.com/watch?v=2OuW7O2wqts"
         },
         {
           "label": {
-            "en": "Cover: Baluweng",
+            "en": "Baluweng Cover",
             "id": "Cover: Baluweng"
           },
           "url": "https://www.youtube.com/watch?v=1XbltPaZhiA"
@@ -219,6 +339,7 @@
     {
       "id": "cs-dmp-rungkad",
       "category": "youtube",
+      "visualVariant": "image",
       "visible": true,
       "featured": true,
       "tag": {
@@ -226,16 +347,16 @@
         "id": "Live Cover & Audio Multi-Track • YouTube"
       },
       "title": {
-        "en": "Project DMP — PASGAB76 ft. Novia Rosma Live Cover",
-        "id": "Project DMP — PASGAB76 ft. Novia Rosma Live Cover"
+        "en": "Project DMP — PASGAB76 ft. Novia Rosma (Live Session)",
+        "id": "Project DMP — PASGAB76 ft. Novia Rosma (Live Session)"
       },
       "summary": {
-        "en": "Directed full live-band session capture, tight post-production editing, and multi-track audio mixing for DMP Project releases including Rungkad and Bunga Terakhir (Rock Version).",
-        "id": "Menggarap sesi live-band, penyuntingan pasca-produksi, serta mixing audio multi-track untuk rilisan @ProjectDmp seperti Rungkad dan Bunga Terakhir (Rock Version)."
+        "en": "Directed full live-band session capture, tight multi-angle edits, and studio audio mastering across @ProjectDmp music releases.",
+        "id": "Mengarahkan rekaman sesi band penuh, penyuntingan multi-angle yang presisi, serta mixing audio untuk rilisan @ProjectDmp."
       },
       "impact": {
-        "en": "Full audio-video live session pipeline",
-        "id": "Eksekusi penuh pipeline audio & video live"
+        "en": "End-to-end live session pipeline",
+        "id": "Eksekusi penuh pipeline live audio-video"
       },
       "thumbnail": "/images/yt-showcase-2.jpg",
       "youtubeId": "wpCI40ZEB0U",
@@ -250,24 +371,45 @@
         },
         {
           "label": {
-            "en": "Bunga Terakhir (ft. Ryan)",
-            "id": "Bunga Terakhir (ft. Ryan)"
-          },
-          "url": "https://www.youtube.com/watch?v=Sqa29LvYK9A"
-        },
-        {
-          "label": {
             "en": "Dokter Cinta Cover",
             "id": "Cover Dokter Cinta"
           },
           "url": "https://www.youtube.com/watch?v=RrXocFLTVUg"
         }
       ],
-      "tools": ["Studio One DAW", "Adobe Premiere Pro", "Audio Mixing"]
+      "tools": ["Studio One DAW", "Adobe Premiere Pro", "Multi-Cam Edit"]
+    },
+    {
+      "id": "cs-dmp-bunga",
+      "category": "youtube",
+      "visualVariant": "image",
+      "visible": true,
+      "featured": false,
+      "tag": {
+        "en": "Vocal Feature & Band Production • YouTube",
+        "id": "Penampilan Vokal & Produksi Band • YouTube"
+      },
+      "title": {
+        "en": "DMP Project ft. Ryan — Bunga Terakhir (Rock Version)",
+        "id": "DMP Project ft. Ryan — Bunga Terakhir (Rock Version)"
+      },
+      "summary": {
+        "en": "Featured on lead vocals and full audio-visual post-production — blending rock band arrangement, live performance capture, and cohesive grading.",
+        "id": "Terlibat langsung pada vokal utama sekaligus pasca-produksi audio-visual — memadukan aransemen rock, pengambilan gambar live, dan color grading."
+      },
+      "impact": {
+        "en": "Hands-on artist & post control",
+        "id": "Kendali langsung musikal & visual"
+      },
+      "thumbnail": "/images/yt-showcase-4.jpg",
+      "youtubeId": "Sqa29LvYK9A",
+      "primaryUrl": "https://www.youtube.com/watch?v=Sqa29LvYK9A",
+      "tools": ["Vocal Performance", "Studio One DAW", "Color Grading"]
     },
     {
       "id": "cs-ai-workflow",
       "category": "ai-workflow",
+      "visualVariant": "ai-pipeline",
       "visible": true,
       "featured": true,
       "tag": {
@@ -279,19 +421,20 @@
         "id": "Alur Produksi AI, Audio Voiceover & Builder Aplikasi"
       },
       "summary": {
-        "en": "Daily user of ElevenLabs for AI voice/audio workflows alongside agentic engineering tools (Antigravity, Claude Code, OpenAI Codex, Hermes Agent) to ship custom web tools and speed up content iteration. Dedicated AI ad campaign case studies are in active production.",
-        "id": "Aktif menggunakan ElevenLabs untuk eksperimen voice/audio AI serta coding agent (Antigravity, Claude Code, Codex, Hermes Agent) untuk membangun web app & mempercepat alur kerja kreatif. Studi kasus iklan berbasis AI sedang disiapkan."
+        "en": "Daily practitioner of ElevenLabs for AI voice prototyping alongside agentic tools (Antigravity, Claude Code, OpenAI Codex, Hermes Agent) to build custom web tools and accelerate content turnaround. Dedicated AI ad campaign case studies are in active production.",
+        "id": "Aktif memakai ElevenLabs untuk prototipe voiceover/audio AI serta coding agent (Antigravity, Claude Code, Codex, Hermes Agent) untuk membangun web app & mempercepat alur kerja kreatif. Studi kasus iklan AI sedang dalam produksi aktif."
       },
       "impact": {
-        "en": "Faster prototyping & audio/web shipping",
-        "id": "Percepatan prototipe audio, web & konten"
+        "en": "Faster audio, script & web iteration",
+        "id": "Iterasi cepat audio, skrip & web"
       },
-      "thumbnail": "/images/port-color-grading.webp",
+      "thumbnail": "",
       "tools": ["ElevenLabs", "Antigravity", "Claude Code", "Codex", "Hermes Agent"]
     },
     {
       "id": "cs-studio-audio",
       "category": "audio-photo",
+      "visualVariant": "image",
       "visible": true,
       "featured": false,
       "tag": {
@@ -299,23 +442,24 @@
         "id": "Rekayasa Audio & Aransemen Studio"
       },
       "title": {
-        "en": "Band Tracking, Podcast Cleanup & Mastering",
-        "id": "Rekaman Band Multi-Track & Mastering Audio"
+        "en": "Studio One Multi-Track Recording & Mastering",
+        "id": "Rekaman Band Multi-Track & Mastering Studio One"
       },
       "summary": {
-        "en": "Operated Studio One DAW for multi-track band instrument recording, vocal tuning, noise reduction, commercial voiceover cleanup, and original arrangement.",
-        "id": "Mengoperasikan Studio One DAW untuk rekaman multi-track instrumen band, pembersihan noise podcast/VO, mixing, mastering, hingga aransemen instrumen orisinal."
+        "en": "Operated dual-monitor Studio One DAW suites for live band drum/guitar tracking, commercial voiceover noise cleanup, mixing, and mastering.",
+        "id": "Mengoperasikan Studio One DAW untuk rekaman instrumen band live, pembersihan noise voiceover komersial, mixing, hingga mastering siap rilis."
       },
       "impact": {
-        "en": "Broadcast-ready audio clarity",
+        "en": "Broadcast-ready sonic clarity",
         "id": "Kejernihan audio standar rilis komersial"
       },
-      "thumbnail": "/images/port-audio-band.jpg",
-      "tools": ["Studio One DAW", "Audio Mastering"]
+      "thumbnail": "/images/port-audio-podcast.jpg",
+      "tools": ["Studio One DAW", "Vocal Mixing", "Audio Mastering"]
     },
     {
       "id": "cs-commercial-photo",
       "category": "audio-photo",
+      "visualVariant": "image",
       "visible": true,
       "featured": false,
       "tag": {
@@ -323,15 +467,15 @@
         "id": "Fotografi Event & Komersial"
       },
       "title": {
-        "en": "Wedding & Outdoor Cinematic Photography",
-        "id": "Dokumentasi Wedding & Pemotretan Outdoor"
+        "en": "Traditional Wedding & Live Band Studio Coverage",
+        "id": "Dokumentasi Wedding & Sesi Studio Musik"
       },
       "summary": {
-        "en": "Delivered traditional wedding and outdoor pre-wedding photography coverage including natural/flash lighting setup and consistent color grading in Adobe Lightroom.",
-        "id": "Menangani dokumentasi pernikahan tradisional dan sesi pre-wedding outdoor lengkap dengan penataan cahaya serta retouching warna profesional di Adobe Lightroom."
+        "en": "Delivered traditional wedding documentation and indoor studio coverage, managing ambient/flash lighting and consistent Lightroom grading.",
+        "id": "Menangani dokumentasi pernikahan tradisional dan sesi studio indoor dengan penataan cahaya presisi serta color grading konsisten di Lightroom."
       },
       "impact": {
-        "en": "Full-event visual storytelling & retouching",
+        "en": "Full-event storytelling & retouching",
         "id": "Dokumentasi visual utuh & retouching rapi"
       },
       "thumbnail": "/images/port-wedding-javanese.jpg",
@@ -352,13 +496,13 @@
       },
       "organization": "Hoki Jaya Motor, Damay Musik & Project DMP",
       "type": {
-        "en": "Contract / Brand & Channel Production",
-        "id": "Kontrak / Produksi Brand & Channel"
+        "en": "Brand & Channel Production",
+        "id": "Produksi Brand & Channel"
       },
       "bullets": {
         "en": [
           "Grew Hoki Jaya Motor TikTok (@hjm_hokijayamotor) and Instagram (@hokijaya_motor) from 0 to 120K+ followers and 5M+ organic views through retention-led short-form video.",
-          "Launched and produced multi-cam music sessions for Damay Musik Subang and Project DMP from scratch to full YouTube monetization.",
+          "Launched and produced multi-cam music sessions for Damay Musik Subang and Project DMP from zero to full YouTube monetization.",
           "Executed solo end-to-end production as well as coordinated multi-person filming and post-production schedules."
         ],
         "id": [
@@ -379,19 +523,19 @@
         "en": "AI Workflow & Creative Automation Builder",
         "id": "AI Workflow & Creative Automation Builder"
       },
-      "organization": "Independent Projects",
+      "organization": "Independent R&D",
       "type": {
-        "en": "Self-Directed / Workflow R&D",
-        "id": "Mandiri / Riset Alur Kerja AI"
+        "en": "Workflow Automation & Web Tooling",
+        "id": "Otomasi Alur Kerja & Web Tooling"
       },
       "bullets": {
         "en": [
-          "Integrated AI tools including ElevenLabs, Antigravity, Claude Code, OpenAI Codex, and Hermes Agent into daily media workflows and rapid web prototyping.",
-          "Built functional personal web applications (including bilingual study tools and modular portfolio systems) without relying on heavy manual boilerplate."
+          "Integrated ElevenLabs, Antigravity, Claude Code, OpenAI Codex, and Hermes Agent into daily media pipelines and rapid prototyping workflows.",
+          "Built functional custom web applications and modular portfolio tooling tailored for fast client and recruitment iteration."
         ],
         "id": [
-          "Mengintegrasikan ElevenLabs, Antigravity, Claude Code, OpenAI Codex, dan Hermes Agent ke dalam alur kerja media serta pembuatan aplikasi web cepat.",
-          "Membangun web app fungsional secara mandiri (termasuk sistem belajar dan portofolio modular) berbasis workflow agentic AI."
+          "Mengintegrasikan ElevenLabs, Antigravity, Claude Code, OpenAI Codex, dan Hermes Agent ke dalam pipeline media serta prototipe cepat.",
+          "Membangun aplikasi web kustom yang fungsional dan portofolio modular yang mudah diperbarui tanpa hambatan teknis."
         ]
       }
     },
@@ -408,17 +552,17 @@
       },
       "organization": "Commercial Live Streaming",
       "type": {
-        "en": "Project-Based / Side Engagement",
-        "id": "Berbasis Proyek / Paruh Waktu"
+        "en": "Live Production / On-Camera",
+        "id": "Produksi Siaran Langsung"
       },
       "bullets": {
         "en": [
-          "Operated OBS Studio and TikTok Live Studio setups for stable multi-scene commercial broadcasts.",
-          "Hosted on-camera live sessions focused on real-time audience Q&A and direct product conversion."
+          "Configured OBS Studio and TikTok Live Studio scenes, audio routing, and lighting for smooth multi-hour commercial streams.",
+          "Hosted live on-camera segments focused on real-time Q&A and product conversion."
         ],
         "id": [
-          "Mengelola setup teknis siaran langsung multi-scene menggunakan OBS Studio dan TikTok Live Studio.",
-          "Membawakan sesi live on-camera untuk interaksi audiens langsung dan dorongan konversi penjualan."
+          "Mengatur multi-scene OBS Studio, TikTok Live Studio, audio routing, dan tata cahaya untuk siaran komersial yang stabil.",
+          "Membawakan sesi live on-camera dengan fokus interaksi real-time dan dorongan konversi penjualan."
         ]
       }
     },
@@ -430,22 +574,22 @@
         "id": "Apr 2026 – Sekarang"
       },
       "role": {
-        "en": "Community & Server Operations Administrator",
+        "en": "Community & Operations Administrator",
         "id": "Administrator Komunitas & Operasional Server"
       },
       "organization": "Nusantara ARK Community",
       "type": {
-        "en": "Community Management (Part-Time)",
-        "id": "Manajemen Komunitas (Paruh Waktu)"
+        "en": "Digital Community Ops (Part-Time)",
+        "id": "Operasional Komunitas (Paruh Waktu)"
       },
       "bullets": {
         "en": [
-          "Planned community retention events and promotional campaigns to maintain healthy daily active user participation.",
-          "Monitored server uptime, resolved member disputes, and coordinated moderation guidelines."
+          "Planned promotional campaigns and community retention events to grow active player engagement.",
+          "Monitored server uptime, resolved member escalations, and enforced fair community operations."
         ],
         "id": [
-          "Merancang kampanye promosi dan event komunitas untuk menjaga pertumbuhan pengguna aktif.",
-          "Memantau stabilitas operasional server dan menangani dukungan anggota komunitas secara responsif."
+          "Menjalankan kampanye promosi serta merancang event komunitas untuk menjaga keterlibatan pemain aktif.",
+          "Memantau stabilitas server dan menangani dukungan anggota komunitas secara responsif."
         ]
       }
     },
@@ -462,17 +606,17 @@
       },
       "organization": "Creative Studio",
       "type": {
-        "en": "Production & Post-Production",
-        "id": "Produksi & Pasca-Produksi"
+        "en": "Commercial & Entertainment Post",
+        "id": "Pasca-Produksi Komersial"
       },
       "bullets": {
         "en": [
-          "Delivered commercial and entertainment video edits in Adobe Premiere Pro and CapCut under tight turnaround schedules.",
-          "Handled rough cuts, audio-video synchronization, pacing, and color correction."
+          "Edited commercial and entertainment deliverables in Adobe Premiere Pro and CapCut under tight turnaround schedules.",
+          "Managed assembly cuts, audio-video sync, motion pacing, and color correction."
         ],
         "id": [
-          "Menyelesaikan editing video komersial dan hiburan dengan tenggat ketat menggunakan Adobe Premiere Pro dan CapCut.",
-          "Menangani raw cutting, sinkronisasi audio, ritme visual, hingga color grading."
+          "Menyelesaikan editing video komersial dan hiburan dengan tenggat ketat di Adobe Premiere Pro dan CapCut.",
+          "Menangani assembly cut, sinkronisasi audio, ritme visual, dan color correction."
         ]
       }
     },
@@ -489,17 +633,17 @@
       },
       "organization": "Audio Studio",
       "type": {
-        "en": "Studio Operations",
+        "en": "Studio Audio Engineering",
         "id": "Operasional Studio Musik"
       },
       "bullets": {
         "en": [
-          "Operated Studio One DAW for vocal tracking, multi-track mixing, noise cleanup, and final mastering.",
-          "Produced original instrumental arrangements tailored to client branding briefs."
+          "Operated Studio One DAW for vocal tracking, multi-track mixing, noise reduction, and mastering.",
+          "Created original instrumental arrangements tailored to client briefs."
         ],
         "id": [
           "Mengoperasikan Studio One DAW untuk rekaman vokal, mixing multi-track, dan mastering audio.",
-          "Membuat aransemen instrumen orisinal sesuai kebutuhan branding klien."
+          "Menciptakan aransemen instrumen orisinal sesuai kebutuhan branding klien."
         ]
       }
     },
@@ -521,12 +665,12 @@
       },
       "bullets": {
         "en": [
-          "Photographed traditional weddings and outdoor pre-wedding sessions managing lighting and framing.",
-          "Delivered curated high-resolution galleries retouched in Adobe Lightroom."
+          "Photographed traditional wedding ceremonies and outdoor portraits with balanced natural and strobe lighting.",
+          "Retouched high-resolution client galleries in Adobe Lightroom."
         ],
         "id": [
-          "Mendokumentasikan acara pernikahan dan sesi pre-wedding outdoor dengan tata cahaya dan komposisi rapi.",
-          "Menyunting dan meretouch galeri foto resolusi tinggi menggunakan Adobe Lightroom."
+          "Mendokumentasikan acara pernikahan dan sesi outdoor dengan tata cahaya dan komposisi rapi.",
+          "Menyunting galeri foto resolusi tinggi menggunakan Adobe Lightroom."
         ]
       }
     }
@@ -588,22 +732,7 @@
       ]
     }
   ],
-  "education": [
-    {
-      "id": "edu-paket-c",
-      "visible": true,
-      "period": "2026 – Jun 2027",
-      "program": {
-        "en": "Senior High Equivalency (Paket C) — Social Sciences Track",
-        "id": "Pendidikan Kesetaraan Paket C (Setara SMA — IPS)"
-      },
-      "institution": "PKBM Indonesia",
-      "status": {
-        "en": "In Progress (Expected June 2027) • Planning Online B.A. Communication Science (RPL)",
-        "id": "Sedang Berjalan (Target Lulus Juni 2027) • Rencana Lanjut S1 Ilmu Komunikasi (RPL Online)"
-      }
-    }
-  ],
+  "education": [],
   "languages": [
     {
       "name": {
@@ -621,8 +750,8 @@
         "id": "Bahasa Inggris"
       },
       "level": {
-        "en": "Working Proficiency (CEFR B2 Track)",
-        "id": "Bahasa Kerja Profesional (Target CEFR B2)"
+        "en": "Professional Working Proficiency",
+        "id": "Bahasa Kerja Profesional"
       }
     }
   ]

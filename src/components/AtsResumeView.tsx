@@ -20,18 +20,18 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
 
   return (
     <div className="min-h-screen bg-[var(--bg-page)] pb-14">
-      {/* Screen Toolbar — Hidden when exporting PDF */}
-      <div className="no-print sticky top-0 z-30 border-b border-[var(--border-color)] bg-[var(--bg-page)]/95 backdrop-blur-md">
-        <div className="max-w-[850px] mx-auto px-4 h-16 flex items-center justify-between gap-3">
+      {/* Screen-only Toolbar — wraps cleanly on mobile, zero clipping */}
+      <div className="no-print border-b border-[var(--border-color)] bg-[var(--bg-surface)]">
+        <div className="max-w-[820px] mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--text-muted)] transition"
+            className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-page)] text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--text-muted)] transition"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>{locale === "en" ? "Back to Portfolio" : "Kembali ke Portofolio"}</span>
           </Link>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <ThemeLangControls
               locale={locale}
               onChangeLocale={setLocale}
@@ -50,36 +50,41 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
         </div>
       </div>
 
-      {/* Pure ATS A4 Sheet */}
-      <main className="px-4 pt-6 sm:pt-10">
-        <article className="print-sheet max-w-[820px] mx-auto bg-white text-neutral-900 border border-neutral-200 rounded-xl shadow-sm p-6 sm:p-10 space-y-6">
-          {/* Header */}
-          <header className="border-b-2 border-neutral-900 pb-4 space-y-2">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight uppercase text-neutral-950">
-              {data.profile.fullName}
-            </h1>
-            <p className="text-base font-semibold text-neutral-800">
+      {/* Swiss-Clean A4 Printable Sheet (100% ATS Parseable) */}
+      <main className="px-3 sm:px-6 pt-6 sm:pt-8">
+        <article className="print-sheet max-w-[790px] mx-auto bg-white text-[#141413] border border-[#dfddd6] shadow-sm p-6 sm:p-11 space-y-5">
+          {/* Executive Masthead */}
+          <header className="border-b-2 border-[#141413] pb-4 space-y-1.5">
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
+              <h1 className="font-display text-2xl sm:text-[1.85rem] font-extrabold tracking-tight uppercase text-[#141413]">
+                {data.profile.fullName}
+              </h1>
+              <span className="text-xs font-medium text-[#5a5955] shrink-0">
+                {pickText(data.profile.targetLocation, locale)}
+              </span>
+            </div>
+
+            <p className="text-sm sm:text-[15px] font-semibold text-[#993513]">
               {pickText(data.profile.headline, locale)}
             </p>
-            <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-neutral-700 pt-1">
+
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[12px] text-[#4a4945] pt-1">
               <span>{pickText(data.profile.location, locale)}</span>
-              <span>•</span>
-              <span>{pickText(data.profile.targetLocation, locale)}</span>
-              <span>•</span>
-              <a href={`mailto:${data.profile.email}`} className="underline">
+              <span aria-hidden="true">|</span>
+              <a href={`mailto:${data.profile.email}`} className="underline underline-offset-2">
                 {data.profile.email}
               </a>
-              <span>•</span>
+              <span aria-hidden="true">|</span>
               <span>{data.profile.whatsappDisplay}</span>
-              <span>•</span>
-              <a href={data.profile.websiteUrl} className="underline">
+              <span aria-hidden="true">|</span>
+              <a href={data.profile.websiteUrl} className="underline underline-offset-2">
                 {data.profile.websiteUrl.replace(/^https?:\/\//, "")}
               </a>
               {data.profile.linkedinUrl && (
                 <>
-                  <span>•</span>
-                  <a href={data.profile.linkedinUrl} className="underline">
-                    LinkedIn
+                  <span aria-hidden="true">|</span>
+                  <a href={data.profile.linkedinUrl} className="underline underline-offset-2">
+                    {data.profile.linkedinUrl.replace(/^https?:\/\/(www\.)?/, "")}
                   </a>
                 </>
               )}
@@ -88,33 +93,37 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
 
           {/* Professional Summary */}
           <section className="space-y-1.5">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-neutral-900 border-b border-neutral-300 pb-1">
-              {locale === "en" ? "Professional Summary" : "Ringkasan Profesional"}
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#141413] border-b border-[#d4d2ca] pb-1">
+              {locale === "en" ? "Summary" : "Ringkasan Profesional"}
             </h2>
-            <p className="text-[13.5px] leading-relaxed text-neutral-800">
+            <p className="text-[13px] leading-relaxed text-[#2b2a27]">
               {pickText(data.profile.bio, locale)}
             </p>
           </section>
 
-          {/* Published Proof & Key Metrics */}
-          <section className="space-y-1.5">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-neutral-900 border-b border-neutral-300 pb-1">
-              {locale === "en" ? "Key Metrics & Published Channels" : "Hasil Utama & Kanal Aktif"}
+          {/* Inline Key Outcomes & Verified Channels (No bulky gray cards) */}
+          <section className="space-y-2">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#141413] border-b border-[#d4d2ca] pb-1">
+              {locale === "en" ? "Verified Impact & Published Work" : "Pencapaian & Tautan Bukti"}
             </h2>
-            <ul className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-neutral-800 pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 py-1.5 border-b border-[#eceae3]">
               {data.metrics.map((m) => (
-                <li key={m.id} className="p-2.5 bg-neutral-50 border border-neutral-200 rounded">
-                  <strong className="text-sm text-neutral-950 block">{m.value}</strong>
-                  <span>{pickText(m.label, locale)}</span>
-                </li>
+                <div key={m.id} className="text-[12.5px]">
+                  <strong className="font-display text-base font-bold text-[#141413] mr-1.5">
+                    {m.value}
+                  </strong>
+                  <span className="font-medium text-[#4a4945]">{pickText(m.label, locale)}</span>
+                </div>
               ))}
-            </ul>
+            </div>
             {visibleChannels.length > 0 && (
-              <p className="text-xs text-neutral-700 pt-1 leading-relaxed">
-                <strong>{locale === "en" ? "Verified Links: " : "Tautan Bukti: "}</strong>
+              <p className="text-[12px] text-[#4a4945] leading-relaxed">
+                <strong className="text-[#141413]">
+                  {locale === "en" ? "Channels: " : "Kanal Aktif: "}
+                </strong>
                 {visibleChannels.map((c, idx) => (
                   <span key={c.id}>
-                    {idx > 0 ? " | " : ""}
+                    {idx > 0 ? "  •  " : ""}
                     {c.label} ({c.handle})
                   </span>
                 ))}
@@ -124,22 +133,22 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
 
           {/* Work Experience */}
           <section className="space-y-3">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-neutral-900 border-b border-neutral-300 pb-1">
-              {locale === "en" ? "Work Experience" : "Pengalaman Kerja"}
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#141413] border-b border-[#d4d2ca] pb-1">
+              {locale === "en" ? "Experience" : "Pengalaman Kerja"}
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {visibleExperiences.map((exp) => (
                 <div key={exp.id} className="space-y-1">
                   <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
-                    <h3 className="text-sm font-bold text-neutral-950">
-                      {pickText(exp.role, locale)} —{" "}
-                      <span className="font-semibold text-neutral-700">{exp.organization}</span>
+                    <h3 className="text-[13.5px] font-bold text-[#141413]">
+                      {pickText(exp.role, locale)}
+                      <span className="font-normal text-[#4a4945]"> — {exp.organization}</span>
                     </h3>
-                    <span className="text-xs font-medium text-neutral-600 shrink-0">
+                    <span className="font-mono-tech text-[11px] font-medium text-[#5a5955] shrink-0">
                       {pickText(exp.period, locale)}
                     </span>
                   </div>
-                  <ul className="list-disc pl-5 space-y-1 text-[13px] text-neutral-800 leading-snug">
+                  <ul className="list-disc pl-4 space-y-0.5 text-[12.5px] text-[#2b2a27] leading-snug">
                     {pickList(exp.bullets, locale).map((b, i) => (
                       <li key={i}>{b}</li>
                     ))}
@@ -149,49 +158,50 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
             </div>
           </section>
 
-          {/* Tools & Technical Capabilities */}
-          <section className="space-y-2">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-neutral-900 border-b border-neutral-300 pb-1">
-              {locale === "en" ? "Core Tools & AI Stack" : "Keahlian & Software"}
+          {/* Tools & Capabilities */}
+          <section className="space-y-1.5">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#141413] border-b border-[#d4d2ca] pb-1">
+              {locale === "en" ? "Production Tools & AI Workflow Stack" : "Software & Ekosistem AI"}
             </h2>
-            <div className="space-y-1 text-[13px] text-neutral-800">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-[12.5px] text-[#2b2a27] pt-0.5">
               {data.toolGroups.map((group) => (
                 <p key={group.id}>
-                  <strong className="text-neutral-950">{pickText(group.title, locale)}: </strong>
+                  <strong className="text-[#141413]">{pickText(group.title, locale)}: </strong>
                   {group.items.join(", ")}
                 </p>
               ))}
             </div>
           </section>
 
-          {/* Education & Languages */}
-          <section className="space-y-2">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-neutral-900 border-b border-neutral-300 pb-1">
-              {locale === "en" ? "Education & Languages" : "Pendidikan & Bahasa"}
+          {/* Languages & Optional Credentials (Only renders education if explicitly enabled) */}
+          <section className="space-y-1.5">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#141413] border-b border-[#d4d2ca] pb-1">
+              {locale === "en" ? "Languages & Availability" : "Bahasa & Ketersediaan"}
             </h2>
-            <div className="space-y-2 text-[13px] text-neutral-800">
-              {visibleEducation.map((edu) => (
-                <div
-                  key={edu.id}
-                  className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1"
-                >
-                  <div>
-                    <strong className="text-neutral-950">{pickText(edu.program, locale)}</strong> —{" "}
-                    <span>{edu.institution}</span>
-                    <p className="text-xs text-neutral-600">{pickText(edu.status, locale)}</p>
-                  </div>
-                  <span className="text-xs font-medium text-neutral-600 shrink-0">{edu.period}</span>
-                </div>
-              ))}
-              <p className="pt-1">
-                <strong className="text-neutral-950">
-                  {locale === "en" ? "Languages: " : "Bahasa: "}
-                </strong>
-                {data.languages
-                  .map((l) => `${pickText(l.name, locale)} (${pickText(l.level, locale)})`)
-                  .join(" • ")}
-              </p>
-            </div>
+            {visibleEducation.length > 0 && (
+              <div className="space-y-1 pb-1">
+                {visibleEducation.map((edu) => (
+                  <p key={edu.id} className="text-[12.5px] text-[#2b2a27]">
+                    <strong className="text-[#141413]">{pickText(edu.program, locale)}</strong> —{" "}
+                    {edu.institution} ({edu.period})
+                  </p>
+                ))}
+              </div>
+            )}
+            <p className="text-[12.5px] text-[#2b2a27]">
+              <strong className="text-[#141413]">
+                {locale === "en" ? "Languages: " : "Bahasa: "}
+              </strong>
+              {data.languages
+                .map((l) => `${pickText(l.name, locale)} (${pickText(l.level, locale)})`)
+                .join("  •  ")}
+            </p>
+            <p className="text-[12.5px] text-[#4a4945]">
+              <strong className="text-[#141413]">
+                {locale === "en" ? "Availability: " : "Ketersediaan: "}
+              </strong>
+              {pickText(data.profile.availabilityBadge, locale)}
+            </p>
           </section>
         </article>
       </main>

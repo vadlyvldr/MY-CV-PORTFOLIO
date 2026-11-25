@@ -28,6 +28,15 @@ export interface ChannelLink {
 }
 
 export type CaseStudyCategory = "short-form" | "youtube" | "audio-photo" | "ai-workflow";
+export type CaseStudyVisualVariant = "image" | "reel-frame" | "ai-pipeline";
+
+export interface ReelVisualMeta {
+  handle: string;
+  hookCue: LocalizedText;
+  durationLabel: string;
+  ratioLabel: string;
+  aspectNote: LocalizedText;
+}
 
 export interface CaseStudyLink {
   label: LocalizedText;
@@ -37,6 +46,8 @@ export interface CaseStudyLink {
 export interface CaseStudyItem {
   id: string;
   category: CaseStudyCategory;
+  visualVariant?: CaseStudyVisualVariant;
+  reelMeta?: ReelVisualMeta;
   visible: boolean;
   featured: boolean;
   tag: LocalizedText;

@@ -1,32 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  --bg-page: #fafaf9;
+  --bg-page: #f6f5f1;
   --bg-surface: #ffffff;
-  --bg-subtle: #f3f4f6;
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
-  --border-color: #e5e7eb;
-  --accent: #1d4ed8;
-  --accent-hover: #1e40af;
-  --accent-soft: #eff6ff;
+  --bg-subtle: #eceae3;
+  --bg-stage: #141416;
+  --text-primary: #141413;
+  --text-secondary: #4a4945;
+  --text-muted: #76746e;
+  --border-color: #e2dfd7;
+  --accent: #b8431b;
+  --accent-hover: #993513;
+  --accent-soft: rgba(184, 67, 27, 0.1);
   --accent-ink: #ffffff;
-  --success: #059669;
+  --success: #0e7a53;
 }
 
 html.dark {
-  --bg-page: #0b0f17;
-  --bg-surface: #111827;
-  --bg-subtle: #1f2937;
-  --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --border-color: #1f2937;
-  --accent: #38bdf8;
-  --accent-hover: #7dd3fc;
-  --accent-soft: rgba(56, 189, 248, 0.12);
-  --accent-ink: #0b0f17;
+  --bg-page: #0d0d0f;
+  --bg-surface: #151518;
+  --bg-subtle: #1f1f24;
+  --bg-stage: #09090b;
+  --text-primary: #f4f3ee;
+  --text-secondary: #c5c3bc;
+  --text-muted: #8b8982;
+  --border-color: #26262b;
+  --accent: #ec6d42;
+  --accent-hover: #f28661;
+  --accent-soft: rgba(236, 109, 66, 0.14);
+  --accent-ink: #0d0d0f;
   --success: #34d399;
 }
 
@@ -46,12 +48,16 @@ body {
   background-color: var(--bg-page);
   color: var(--text-primary);
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
+  line-height: 1.65;
   overflow-x: hidden;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-.font-serif-editorial {
+.font-display {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-serif-accent {
   font-family: var(--font-serif), Georgia, serif;
 }
 
@@ -74,16 +80,33 @@ body {
   border-radius: 9999px;
 }
 
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-slow {
+  animation: marqueeScroll 34s linear infinite;
+}
+
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
+}
+
 @media print {
   @page {
     size: A4;
-    margin: 12mm 14mm;
+    margin: 11mm 14mm;
   }
 
   html,
   body {
     background: #ffffff !important;
-    color: #000000 !important;
+    color: #111111 !important;
   }
 
   .no-print {

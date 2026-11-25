@@ -218,7 +218,7 @@ export function AdminDashboard({ initialData }: AdminDashboardProps) {
       title: { en: "Untitled Case Study", id: "Studi Kasus Baru" },
       summary: { en: "Describe your process and result.", id: "Jelaskan proses & hasilnya." },
       impact: { en: "Measurable impact", id: "Hasil terukur" },
-      thumbnail: "/images/port-color-grading.webp",
+      thumbnail: "/images/port-audio-podcast.jpg",
       youtubeId: "",
       primaryUrl: "",
       extraLinks: [],
