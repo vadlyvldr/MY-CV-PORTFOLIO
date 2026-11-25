@@ -151,18 +151,18 @@ function CaseStudyCard({
           )}
         </div>
       ) : (
-        <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-3.5 flex items-center justify-between gap-4 border-b border-[var(--border-color)]/60 bg-[var(--bg-panel)]/45">
-          <div className="inline-flex items-baseline gap-2.5">
+        <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-3.5 flex items-center justify-between gap-3 border-b border-[var(--border-color)]/60 bg-[var(--bg-panel)]/45">
+          <div className="inline-flex items-baseline gap-2.5 shrink-0">
             <span className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--accent)] tabular-nums">
               {indexLabel}
             </span>
             {cs.reelMeta?.ratioLabel && (
-              <span className="px-2 py-0.5 rounded-md border border-[var(--border-color)] bg-[var(--bg-surface)] font-mono-tech text-[10px] font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
+              <span className="px-2 py-0.5 rounded-md border border-[var(--border-color)] bg-[var(--bg-surface)] font-mono-tech text-[10px] font-semibold uppercase tracking-wider text-[var(--text-secondary)] whitespace-nowrap">
                 {cs.reelMeta.ratioLabel}
               </span>
             )}
           </div>
-          <span className="font-mono-tech text-[11px] font-medium text-[var(--text-muted)] text-right truncate">
+          <span className="min-w-0 font-mono-tech text-[11px] font-medium text-[var(--text-muted)] text-right truncate">
             {cs.reelMeta?.handle || pickText(cs.impact, locale)}
           </span>
         </div>
