@@ -15,6 +15,7 @@ describe("cv-data integrity & helpers", () => {
     expect(data.caseStudies.filter((c) => Boolean(c.tiktokId)).length).toBeGreaterThanOrEqual(4);
     expect(data.caseStudies.filter((c) => c.category === "youtube" && c.visible).length).toBeGreaterThanOrEqual(3);
     expect(JSON.stringify(data).toLowerCase()).not.toContain("paket c");
+    expect(JSON.stringify(data)).toContain("SMAN 1 Cipeundeuy");
   });
 
   it("ensures all referenced case study thumbnails exist in public/", () => {

@@ -37,7 +37,7 @@
     "showCaseStudies": true,
     "showExperience": true,
     "showTools": true,
-    "showEducation": false
+    "showEducation": true
   },
   "metrics": [
     {
@@ -852,7 +852,22 @@
       ]
     }
   ],
-  "education": [],
+  "education": [
+    {
+      "id": "edu-sman1-cipeundeuy",
+      "visible": true,
+      "period": "",
+      "program": {
+        "en": "Senior High School — Social Sciences Track",
+        "id": "SMA — Jurusan IPS"
+      },
+      "institution": "SMAN 1 Cipeundeuy",
+      "status": {
+        "en": "",
+        "id": ""
+      }
+    }
+  ],
   "languages": [
     {
       "name": {

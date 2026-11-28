@@ -895,6 +895,23 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                   </h2>
                 </div>
                 <div className="md:col-span-7 divide-y divide-[var(--border-color)] border-y border-[var(--border-color)]">
+                  {data.sections.showEducation &&
+                    data.education
+                      .filter((edu) => edu.visible)
+                      .map((edu) => (
+                        <div
+                          key={edu.id}
+                          className="py-3.5 flex items-center justify-between gap-4 text-sm"
+                        >
+                          <span className="font-semibold text-[var(--text-primary)]">
+                            {edu.institution}
+                          </span>
+                          <span className="text-[var(--text-secondary)] text-right">
+                            {pickText(edu.program, locale)}
+                            {edu.period ? ` (${edu.period})` : ""}
+                          </span>
+                        </div>
+                      ))}
                   {data.languages.map((langItem, idx) => (
                     <div
                       key={idx}
