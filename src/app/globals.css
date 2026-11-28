@@ -108,17 +108,21 @@ body {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 10mm 13mm;
+    margin: 12mm 14mm;
   }
 
   html,
-  body {
+  html.dark,
+  body,
+  .cv-print-shell,
+  .cv-print-main {
     background: #ffffff !important;
-    color: #141413 !important;
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    min-height: 0 !important;
+    height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
 
   .no-print {
@@ -132,6 +136,7 @@ body {
     margin: 0 auto !important;
     max-width: 100% !important;
     width: 100% !important;
+    background: #ffffff !important;
   }
 
   .resume-block,
