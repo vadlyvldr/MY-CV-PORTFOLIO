@@ -129,14 +129,14 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
         <article
           className={`print-sheet max-w-[794px] mx-auto bg-white text-[#111111] border border-[#dedcd4] shadow-sm ${
             isOnePage
-              ? "p-5 sm:px-9 sm:py-7 space-y-3"
+              ? "p-5 sm:px-9 sm:py-6 space-y-2.5"
               : "p-6 sm:px-10 sm:py-9 space-y-4"
           }`}
         >
           {/* Editorial Poster Masthead: B&W Portrait Left + Bold Stacked Name Right */}
-          <header className="resume-block flex flex-col sm:flex-row print:flex-row items-start sm:items-center print:items-center gap-4 sm:gap-7 print:gap-6 pb-1">
+          <header className="resume-block flex flex-col sm:flex-row print:flex-row items-start sm:items-center print:items-center gap-4 sm:gap-6 print:gap-5">
             {showPhoto && (
-              <div className="shrink-0 w-[92px] h-[112px] sm:w-[106px] sm:h-[130px] print:w-[98px] print:h-[120px] bg-[#0b0b0d] overflow-hidden border border-[#111111]/15">
+              <div className="shrink-0 w-[88px] h-[108px] sm:w-[96px] sm:h-[116px] print:w-[92px] print:h-[112px] bg-[#0b0b0d] overflow-hidden border border-[#111111]/15">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={data.profile.avatarUrl || "/images/profile-main.png"}
@@ -191,12 +191,12 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
           <hr className="border-t-[1.5px] border-[#111111]" />
 
           {/* Experience */}
-          <section className="space-y-2">
-            <h2 className="resume-heading font-display text-[15px] sm:text-[17px] font-extrabold tracking-tight text-[#111111]">
+          <section className="space-y-1.5">
+            <h2 className="resume-heading font-display text-[15px] sm:text-[16.5px] font-extrabold tracking-tight text-[#111111]">
               {locale === "en" ? "Experience" : "Pengalaman"}
             </h2>
 
-            <div className={isOnePage ? "space-y-2" : "space-y-3"}>
+            <div className={isOnePage ? "space-y-1.5" : "space-y-3"}>
               {primaryExperiences.map((exp) => {
                 const rawBullets = pickList(exp.bullets, locale);
                 const bulletsToShow = isOnePage ? rawBullets.slice(0, 2) : rawBullets;
@@ -249,9 +249,9 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
           <hr className="border-t-[1.5px] border-[#111111]" />
 
           {/* Split 2-Column Editorial Footer (Vertical Center Rule matching reference layout) */}
-          <section className="resume-block grid grid-cols-1 sm:grid-cols-12 print:grid-cols-12 gap-5 sm:gap-0 print:gap-0 items-stretch">
+          <section className="resume-block grid grid-cols-1 sm:grid-cols-12 print:grid-cols-12 gap-4 sm:gap-0 print:gap-0 items-stretch">
             {/* Left Column: Education + Languages + Contact & Links */}
-            <div className="sm:col-span-5 print:col-span-5 sm:pr-5 print:pr-5 sm:border-r-[1.5px] print:border-r-[1.5px] sm:border-[#111111] print:border-[#111111] space-y-3.5">
+            <div className="sm:col-span-5 print:col-span-5 sm:pr-5 print:pr-5 sm:border-r-[1.5px] print:border-r-[1.5px] sm:border-[#111111] print:border-[#111111] space-y-2.5">
               {visibleEducation.length > 0 && (
                 <div className="space-y-1">
                   <h2 className="font-display text-[15px] sm:text-[16px] font-extrabold tracking-tight text-[#111111]">
@@ -348,7 +348,7 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
             </div>
 
             {/* Right Column: Capabilities (Technical Stack + Core Strengths) */}
-            <div className="sm:col-span-7 print:col-span-7 sm:pl-5 print:pl-5 space-y-3">
+            <div className="sm:col-span-7 print:col-span-7 sm:pl-5 print:pl-5 space-y-2">
               <h2 className="font-display text-[15px] sm:text-[16px] font-extrabold tracking-tight text-[#111111]">
                 {locale === "en" ? "Capabilities" : "Kemampuan"}
               </h2>
