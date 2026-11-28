@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Printer } from "lucide-react";
-import { CvProfileData, pickList, pickText } from "@/types/cv";
+import { CvProfileData, pickText } from "@/types/cv";
 import { useCvDraftPreview } from "@/lib/use-cv-draft";
 import { ThemeLangControls, usePreferences } from "./ThemeLangControls";
 
@@ -11,55 +11,101 @@ interface AtsResumeViewProps {
   initialData: CvProfileData;
 }
 
-type ResumeDensity = "one-page" | "full";
+const A4_WIDTH_PX = 794;
+const A4_HEIGHT_PX = 1122;
 
 export function AtsResumeView({ initialData }: AtsResumeViewProps) {
   const { locale, setLocale, theme, toggleTheme } = usePreferences();
   const { data } = useCvDraftPreview(initialData);
-  const [density, setDensity] = useState<ResumeDensity>("one-page");
-  const [showPhoto, setShowPhoto] = useState(true);
+  const outerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
 
-  const visibleExperiences = data.experiences.filter((e) => e.visible);
-  const visibleChannels = data.channels.filter((c) => c.visible && Boolean(c.url));
+  // Dynamically scale the fixed 794x1122px A4 paper canvas inside narrow phone viewports
+  // so the exact 1-page editorial layout stays intact without stacking vertically.
+  useEffect(() => {
+    const node = outerRef.current;
+    if (!node) return;
+    const ro = new ResizeObserver((entries) => {
+      const width = entries[0]?.contentRect.width;
+      if (width && width > 0) {
+        setScale(Math.min(1, width / A4_WIDTH_PX));
+      }
+    });
+    ro.observe(node);
+    return () => ro.disconnect();
+  }, []);
+
   const visibleEducation = data.sections.showEducation
     ? data.education.filter((e) => e.visible)
     : [];
 
-  const isOnePage = density === "one-page";
-  // In 1-Page A4 mode, feature 5 primary/management roles (incl. D'Kopian Cafe Manager 2022,
-  // located cleanly without spilling onto Page 2) and condense remaining roles into 1 footer line.
-  const onePageIds = [
-    "exp-creative-producer",
-    "exp-ai-builder",
-    "exp-live-host",
-    "exp-game-admin",
-    "exp-cafe-manager",
-  ];
-  const primaryExperiences = isOnePage
-    ? visibleExperiences.filter((e) => onePageIds.includes(e.id))
-    : visibleExperiences;
-  const earlierExperiences = isOnePage
-    ? visibleExperiences.filter((e) => !onePageIds.includes(e.id))
-    : [];
+  // Curated executive blocks mapped directly from Fadli's complete verified track record
+  // so all experience stays crisp, airy, and readable inside 1 single A4 sheet.
+  const curatedRoles =
+    locale === "en"
+      ? [
+          {
+            title: "Creative Producer & Video Director — Hoki Jaya Motor, SanDisk, Damay Musik & DMP",
+            period: "Jan 2024 – May 2026",
+            body: "Scaled @hjm_hokijayamotor TikTok & @hokijaya_motor IG from 0 to 120K+ followers and 5M+ organic views; produced commercial SanDisk Phone Drive reel for EAONLINE Official (@eaonlineofficial); launched and grew multi-cam live music YouTube channels (@DamayMusikSubang, @ProjectDmp) to full monetization.",
+          },
+          {
+            title: "AI Workflow & SaaS Builder — Malesan (malesan.my.id) & Independent R&D",
+            period: "2025 – Present",
+            body: "Engineered full-stack Next.js 16 & Supabase creator platform (Web, Windows, Android) automating viral hooks, FFmpeg/MediaPipe 9:16 clipping, Groq Whisper captions, AI TTS/ElevenLabs voice prototyping, and Telegram workflows alongside Antigravity, Claude Code, Codex & Hermes Agent.",
+          },
+          {
+            title: "Live Broadcast Producer, Host & Community Admin — Live Commerce & Nusantara ARK",
+            period: "2026 – Present",
+            body: "Configured OBS & TikTok Live Studio multi-scene commercial broadcasts and hosted real-time product conversion streams; planned promotional campaigns, retention events, and daily operations for Nusantara ARK Community.",
+          },
+          {
+            title: "Cafe Manager & Earlier Studio Production — D'Kopian Cafe, Studio One & Freelance",
+            period: "2021 – 2023",
+            body: "Managed daily hospitality operations, staff shifts, inventory, cash flow & acoustic sessions as Cafe Manager at D'Kopian Cafe (2022); edited commercial videos (2022–2023), engineered Studio One DAW tracking/mastering (2021–2022), and photographed traditional weddings (2021).",
+          },
+        ]
+      : [
+          {
+            title: "Creative Producer & Video Director — Hoki Jaya Motor, SanDisk, Damay Musik & DMP",
+            period: "Jan 2024 – Mei 2026",
+            body: "Membangun TikTok @hjm_hokijayamotor & IG @hokijaya_motor dari 0 hingga 120K+ followers dan 5 Juta+ views organik; memproduksi video iklan SanDisk Phone Drive (@eaonlineofficial); merintis channel musik YouTube multi-kamera (@DamayMusikSubang, @ProjectDmp) hingga monetisasi.",
+          },
+          {
+            title: "AI Workflow & SaaS Builder — Malesan (malesan.my.id) & Riset Mandiri",
+            period: "2025 – Sekarang",
+            body: "Membangun aplikasi AI kreator Next.js 16 & Supabase (Web, Windows, Android) untuk hook viral, auto-clipping 9:16 FFmpeg/MediaPipe, subtitle Groq Whisper, AI voiceover/ElevenLabs, serta otomasi Telegram bersama Antigravity, Claude Code, Codex & Hermes Agent.",
+          },
+          {
+            title: "Live Broadcast Host & Community Admin — Siaran Live & Nusantara ARK",
+            period: "2026 – Sekarang",
+            body: "Mengatur multi-scene OBS & TikTok Live Studio serta membawakan siaran penjualan real-time; mengelola kampanye promosi, event retensi pemain, dan operasional server komunitas Nusantara ARK.",
+          },
+          {
+            title: "Cafe Manager & Riwayat Produksi Awal — D'Kopian Cafe, Audio Studio & Freelance",
+            period: "2021 – 2023",
+            body: "Memimpin operasional harian, jadwal staf, stok bahan & arus kas sebagai Manajer Kafe D'Kopian Cafe (2022); video editor komersial (2022–2023), operator mixing/mastering Studio One DAW (2021–2022), serta fotografer wedding tradisional (2021).",
+          },
+        ];
 
   const nonTechStrengths =
     locale === "en"
       ? [
-          "Retention-led storytelling & hook architecture",
-          "End-to-end solo & cross-functional team production",
-          "Operations, scheduling & fast creative turnaround",
+          "Retention-led storytelling & hook strategy",
+          "Solo end-to-end & team production leadership",
+          "Operations scheduling & deadline execution",
         ]
       : [
-          "Komunikasi visual, storytelling & arsitektur hook",
-          "Produksi solo end-to-end maupun koordinasi tim",
-          "Manajemen waktu, operasional & eksekusi tenggat ketat",
+          "Komunikasi visual, storytelling & strategi hook",
+          "Produksi solo end-to-end & koordinasi tim",
+          "Manajemen waktu, operasional & detail teknis",
         ];
 
   return (
-    <div className="min-h-screen bg-[var(--bg-page)] pb-14">
-      {/* Screen-only Toolbar */}
+    <div className="min-h-screen bg-[var(--bg-page)] pb-12">
+      {/* Clean Minimalist Screen Toolbar */}
       <div className="no-print border-b border-[var(--border-color)] bg-[var(--bg-surface)] sticky top-0 z-30">
-        <div className="max-w-[820px] mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-2.5">
+        <div className="max-w-[826px] mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-2.5">
           <Link
             href="/"
             className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-page)] text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--text-muted)] transition"
@@ -68,50 +114,7 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
             <span>{locale === "en" ? "Back to Portfolio" : "Kembali"}</span>
           </Link>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <div
-              role="group"
-              aria-label="Resume page format"
-              className="inline-flex items-center h-9 p-0.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-page)]"
-            >
-              <button
-                type="button"
-                onClick={() => setDensity("one-page")}
-                className={`h-8 px-2.5 rounded-md text-xs font-semibold transition cursor-pointer ${
-                  isOnePage
-                    ? "bg-[var(--accent)] text-[var(--accent-ink)]"
-                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                }`}
-              >
-                {locale === "en" ? "1-Page A4" : "1 Halaman"}
-              </button>
-              <button
-                type="button"
-                onClick={() => setDensity("full")}
-                className={`h-8 px-2.5 rounded-md text-xs font-semibold transition cursor-pointer ${
-                  !isOnePage
-                    ? "bg-[var(--accent)] text-[var(--accent-ink)]"
-                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                }`}
-              >
-                {locale === "en" ? "Full (2 Pages)" : "Lengkap"}
-              </button>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setShowPhoto((prev) => !prev)}
-              className="h-9 px-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-page)] text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition cursor-pointer"
-            >
-              {showPhoto
-                ? locale === "en"
-                  ? "Photo: On"
-                  : "Foto: Aktif"
-                : locale === "en"
-                ? "Photo: Off"
-                : "Foto: Nonaktif"}
-            </button>
-
+          <div className="flex items-center gap-2">
             <ThemeLangControls
               locale={locale}
               onChangeLocale={setLocale}
@@ -129,270 +132,207 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
             </button>
           </div>
         </div>
-        <div className="max-w-[820px] mx-auto px-4 pb-2 text-[11px] text-[var(--text-muted)]">
-          {locale === "en"
-            ? 'Print tip: Set paper to A4, Margins to Default, and uncheck "Headers and footers" for spotless PDF borders.'
-            : 'Tips cetak: Pilih kertas A4, Margin Default, dan matikan centang "Header & Footer" agar pinggiran PDF bersih.'}
-        </div>
       </div>
 
-      {/* Editorial Monochrome Swiss/Modern A4 Resume */}
-      <main className="px-2 sm:px-6 pt-5 sm:pt-7">
-        <article
-          className={`print-sheet max-w-[794px] mx-auto bg-white text-[#111111] border border-[#dedcd4] shadow-sm ${
-            isOnePage
-              ? "p-5 sm:px-9 sm:py-6 space-y-2.5"
-              : "p-6 sm:px-10 sm:py-9 space-y-4"
-          }`}
+      {/* Fixed-Ratio Single A4 Paper Sheet (Auto-scales cleanly inside phone screens!) */}
+      <main className="px-3 sm:px-6 pt-5 sm:pt-8">
+        <div
+          ref={outerRef}
+          className="print-scale-outer w-full max-w-[794px] mx-auto overflow-hidden shadow-lg border border-[#dedcd4]"
+          style={{ height: `${Math.round(A4_HEIGHT_PX * scale)}px` }}
         >
-          {/* Editorial Poster Masthead: B&W Portrait Left + Bold Stacked Name Right */}
-          <header className="resume-block flex flex-col sm:flex-row print:flex-row items-start sm:items-center print:items-center gap-4 sm:gap-6 print:gap-5">
-            {showPhoto && (
-              <div className="shrink-0 w-[84px] h-[102px] sm:w-[90px] sm:h-[110px] print:w-[86px] print:h-[104px] bg-[#0b0b0d] overflow-hidden border border-[#111111]/15">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={data.profile.avatarUrl || "/images/profile-main.png"}
-                  alt={data.profile.fullName}
-                  className="w-full h-full object-cover object-top grayscale contrast-110"
-                />
-              </div>
-            )}
+          <article
+            className="print-sheet w-[794px] min-h-[1122px] bg-white text-[#111111] px-12 py-11 flex flex-col justify-between"
+            style={{
+              transform: `scale(${scale})`,
+              transformOrigin: "top left",
+            }}
+          >
+            <div className="space-y-5">
+              {/* Editorial Poster Masthead matching Reference */}
+              <header className="flex items-center gap-7">
+                <div className="shrink-0 w-[112px] h-[138px] bg-[#0b0b0d] overflow-hidden border border-[#111111]/15">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={data.profile.avatarUrl || "/images/profile-main.png"}
+                    alt={data.profile.fullName}
+                    className="w-full h-full object-cover object-top grayscale contrast-110"
+                  />
+                </div>
 
-            <div className="space-y-1.5 min-w-0">
-              <h1
-                className={`font-display font-extrabold tracking-[-0.03em] leading-[0.96] text-[#111111] ${
-                  isOnePage
-                    ? "text-[1.75rem] sm:text-[2.25rem] print:text-[2.1rem]"
-                    : "text-[2rem] sm:text-[2.5rem] print:text-[2.25rem]"
-                }`}
-              >
-                Muhammad Ryan
-                <span className="block">Fadliansyah.</span>
-              </h1>
-              <p className="text-[12.5px] sm:text-[13.5px] font-bold text-[#2b2a27] tracking-tight">
-                {pickText(data.profile.headline, locale)}
-              </p>
-              <p className="text-[11px] text-[#4a4945] font-medium">
-                {pickText(data.profile.location, locale)} • {pickText(data.profile.targetLocation, locale)}
-              </p>
-            </div>
-          </header>
+                <div className="space-y-1.5 min-w-0">
+                  <h1 className="font-display font-extrabold tracking-[-0.035em] leading-[0.95] text-[#111111] text-[2.45rem]">
+                    Muhammad Ryan
+                    <span className="block">Fadliansyah.</span>
+                  </h1>
+                  <p className="text-[14px] font-bold text-[#2b2a27] pt-0.5">
+                    {pickText(data.profile.headline, locale)}
+                  </p>
+                  <p className="text-[11.5px] font-medium text-[#52514d]">
+                    {pickText(data.profile.location, locale)} • {pickText(data.profile.targetLocation, locale)}
+                  </p>
+                </div>
+              </header>
 
-          {/* About / Profile + Key Outcomes */}
-          <section className="resume-block space-y-1.5 pt-1">
-            <h2 className="resume-heading font-display text-[15px] sm:text-[17px] font-extrabold tracking-tight text-[#111111]">
-              {locale === "en" ? "About Me" : "Tentang Saya"}
-            </h2>
-            <p
-              className={`${
-                isOnePage ? "text-[11.2px] leading-[1.42]" : "text-[12.2px] leading-relaxed"
-              } text-[#22211f]`}
-            >
-              {pickText(data.profile.bio, locale)}
-            </p>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-1 pt-0.5 text-[11px] font-semibold text-[#111111]">
-              {data.metrics.map((m) => (
-                <span key={m.id}>
-                  <strong className="font-display font-extrabold">{m.value}</strong>{" "}
-                  <span className="font-normal text-[#3f3e3a]">{pickText(m.label, locale)}</span>
-                </span>
-              ))}
-            </div>
-          </section>
+              {/* About Me */}
+              <section className="space-y-1.5">
+                <h2 className="font-display text-[19px] font-extrabold tracking-tight text-[#111111]">
+                  {locale === "en" ? "About Me" : "Tentang Saya"}
+                </h2>
+                <p className="text-[11.8px] leading-[1.52] text-[#22211f]">
+                  {pickText(data.profile.bio, locale)}
+                </p>
+              </section>
 
-          <hr className="border-t-[1.5px] border-[#111111]" />
+              <hr className="border-t-[1.5px] border-[#111111]" />
 
-          {/* Experience */}
-          <section className="space-y-1.5">
-            <h2 className="resume-heading font-display text-[15px] sm:text-[16.5px] font-extrabold tracking-tight text-[#111111]">
-              {locale === "en" ? "Experience" : "Pengalaman"}
-            </h2>
+              {/* Experience */}
+              <section className="space-y-3">
+                <h2 className="font-display text-[19px] font-extrabold tracking-tight text-[#111111]">
+                  {locale === "en" ? "Experience" : "Pengalaman"}
+                </h2>
 
-            <div className={isOnePage ? "space-y-1.5" : "space-y-3"}>
-              {primaryExperiences.map((exp, idx) => {
-                const rawBullets = pickList(exp.bullets, locale);
-                // Top 2 core roles get 2 impact bullets in 1-Page A4; supporting roles get 1 sharp line
-                const bulletsToShow = isOnePage ? rawBullets.slice(0, idx < 2 ? 2 : 1) : rawBullets;
-                return (
-                  <div key={exp.id} className="resume-entry space-y-0.5">
-                    <div className="flex flex-col sm:flex-row print:flex-row sm:items-baseline print:items-baseline sm:justify-between print:justify-between gap-0.5">
-                      <h3
-                        className={`${
-                          isOnePage ? "text-[11.5px]" : "text-[12.8px]"
-                        } font-bold text-[#111111]`}
-                      >
-                        {pickText(exp.role, locale)} —{" "}
-                        <span className="font-semibold text-[#33322e]">{exp.organization}</span>
-                      </h3>
-                      <span className="text-[10.5px] font-semibold text-[#4a4945] shrink-0">
-                        ({pickText(exp.period, locale)})
-                      </span>
+                <div className="space-y-3">
+                  {curatedRoles.map((role) => (
+                    <div key={role.title} className="space-y-0.5">
+                      <p className="text-[12.2px] font-bold text-[#111111]">
+                        {role.title}{" "}
+                        <span className="font-semibold text-[#4a4945]">({role.period})</span>
+                      </p>
+                      <p className="text-[11.3px] leading-[1.45] text-[#262522]">{role.body}</p>
                     </div>
-                    <ul
-                      className={`list-disc pl-4 ${
-                        isOnePage
-                          ? "space-y-0 text-[10.5px] leading-[1.32]"
-                          : "space-y-0.5 text-[11.8px] leading-snug"
-                      } text-[#22211f]`}
-                    >
-                      {bulletsToShow.map((b, i) => (
-                        <li key={i}>{b}</li>
+                  ))}
+                </div>
+              </section>
+
+              <hr className="border-t-[1.5px] border-[#111111]" />
+
+              {/* Bottom Asymmetric Split Grid matching Reference */}
+              <section className="grid grid-cols-12 items-stretch pt-0.5">
+                {/* Left Column: Education + Languages + Contact */}
+                <div className="col-span-5 pr-6 border-r-[1.5px] border-[#111111] space-y-4">
+                  {visibleEducation.length > 0 && (
+                    <div className="space-y-1">
+                      <h2 className="font-display text-[18px] font-extrabold tracking-tight text-[#111111]">
+                        {locale === "en" ? "Education" : "Pendidikan"}
+                      </h2>
+                      {visibleEducation.map((edu) => (
+                        <div key={edu.id} className="text-[11.3px] leading-[1.42] text-[#22211f]">
+                          <p className="font-bold text-[#111111]">
+                            {edu.institution}
+                            {edu.period ? ` (${edu.period})` : ""}
+                          </p>
+                          <p className="text-[#3f3e3a]">{pickText(edu.program, locale)}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="space-y-1">
+                    <h2 className="font-display text-[18px] font-extrabold tracking-tight text-[#111111]">
+                      {locale === "en" ? "Languages" : "Bahasa"}
+                    </h2>
+                    <div className="text-[11.3px] leading-[1.42] text-[#22211f] space-y-0.5">
+                      {data.languages.map((lang, idx) => (
+                        <p key={idx}>
+                          <strong className="font-semibold text-[#111111]">
+                            {pickText(lang.name, locale)}:
+                          </strong>{" "}
+                          {pickText(lang.level, locale)}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h2 className="font-display text-[18px] font-extrabold tracking-tight text-[#111111]">
+                      {locale === "en" ? "Contact" : "Kontak"}
+                    </h2>
+                    <div className="text-[11.2px] leading-[1.48] text-[#22211f]">
+                      <p>{data.profile.whatsappDisplay}</p>
+                      <p>
+                        <a
+                          href={`mailto:${data.profile.email}`}
+                          className="underline underline-offset-2"
+                        >
+                          {data.profile.email}
+                        </a>
+                      </p>
+                      <p>
+                        <a
+                          href={data.profile.websiteUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline underline-offset-2"
+                        >
+                          {data.profile.websiteUrl.replace(/^https?:\/\//, "")}
+                        </a>
+                        {" • "}
+                        <a
+                          href="https://www.malesan.my.id"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline underline-offset-2"
+                        >
+                          malesan.my.id
+                        </a>
+                      </p>
+                      {data.profile.linkedinUrl && (
+                        <p>
+                          <a
+                            href={data.profile.linkedinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline underline-offset-2"
+                          >
+                            {data.profile.linkedinUrl.replace(/^https?:\/\/(www\.)?/, "")}
+                          </a>
+                        </p>
+                      )}
+                      <p className="text-[10.2px] text-[#4a4945] pt-0.5">
+                        TikTok @hjm_hokijayamotor • SanDisk @eaonlineofficial • YT @DamayMusikSubang • @ProjectDmp
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: Capabilities */}
+                <div className="col-span-7 pl-6 space-y-3.5">
+                  <h2 className="font-display text-[18px] font-extrabold tracking-tight text-[#111111]">
+                    {locale === "en" ? "Capabilities" : "Kemampuan"}
+                  </h2>
+
+                  <div className="space-y-1">
+                    <p className="text-[11.5px] font-bold text-[#111111]">
+                      {locale === "en" ? "Technical & AI Production:" : "Kemampuan Teknis & AI:"}
+                    </p>
+                    <ul className="list-disc pl-4 space-y-1 text-[11px] leading-[1.4] text-[#22211f]">
+                      {data.toolGroups.map((group) => (
+                        <li key={group.id}>
+                          <strong className="text-[#111111]">
+                            {pickText(group.title, locale)}:
+                          </strong>{" "}
+                          {group.items.join(", ")}
+                        </li>
                       ))}
                     </ul>
                   </div>
-                );
-              })}
 
-              {earlierExperiences.length > 0 && (
-                <p className="resume-entry text-[10.2px] text-[#3a3936] pt-1 border-t border-[#e5e3dc] leading-snug">
-                  <strong className="text-[#111111]">
-                    {locale === "en" ? "Earlier Creative Roles: " : "Pengalaman Awal: "}
-                  </strong>
-                  {earlierExperiences
-                    .map(
-                      (e) =>
-                        `${pickText(e.role, locale)} — ${e.organization} (${pickText(e.period, locale)})`
-                    )
-                    .join("  •  ")}
-                </p>
-              )}
-            </div>
-          </section>
-
-          <hr className="border-t-[1.5px] border-[#111111]" />
-
-          {/* Split 2-Column Editorial Footer (Vertical Center Rule matching reference layout) */}
-          <section className="resume-block grid grid-cols-1 sm:grid-cols-12 print:grid-cols-12 gap-4 sm:gap-0 print:gap-0 items-stretch">
-            {/* Left Column: Education + Languages + Contact & Links */}
-            <div className="sm:col-span-5 print:col-span-5 sm:pr-5 print:pr-5 sm:border-r-[1.5px] print:border-r-[1.5px] sm:border-[#111111] print:border-[#111111] space-y-2.5">
-              {visibleEducation.length > 0 && (
-                <div className="space-y-1">
-                  <h2 className="font-display text-[15px] sm:text-[16px] font-extrabold tracking-tight text-[#111111]">
-                    {locale === "en" ? "Education" : "Pendidikan"}
-                  </h2>
-                  {visibleEducation.map((edu) => (
-                    <div key={edu.id} className="text-[11px] leading-snug text-[#22211f]">
-                      <p className="font-bold text-[#111111]">
-                        {edu.institution}
-                        {edu.period ? ` (${edu.period})` : ""}
-                      </p>
-                      <p className="text-[#3f3e3a]">{pickText(edu.program, locale)}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <div className="space-y-1">
-                <h2 className="font-display text-[15px] sm:text-[16px] font-extrabold tracking-tight text-[#111111]">
-                  {locale === "en" ? "Languages" : "Bahasa"}
-                </h2>
-                <ul className="text-[11px] leading-snug text-[#22211f] space-y-0.5">
-                  {data.languages.map((lang, idx) => (
-                    <li key={idx}>
-                      <strong className="font-semibold text-[#111111]">
-                        {pickText(lang.name, locale)}:
-                      </strong>{" "}
-                      {pickText(lang.level, locale)}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="space-y-1">
-                <h2 className="font-display text-[15px] sm:text-[16px] font-extrabold tracking-tight text-[#111111]">
-                  {locale === "en" ? "Contact & Links" : "Kontak & Tautan"}
-                </h2>
-                <div className="text-[11px] leading-snug text-[#22211f] space-y-0.5">
-                  <p>{data.profile.whatsappDisplay}</p>
-                  <p>
-                    <a href={`mailto:${data.profile.email}`} className="underline underline-offset-2">
-                      {data.profile.email}
-                    </a>
-                  </p>
-                  <p>
-                    <a
-                      href={data.profile.websiteUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2"
-                    >
-                      {data.profile.websiteUrl.replace(/^https?:\/\//, "")}
-                    </a>
-                    {" • "}
-                    <a
-                      href="https://www.malesan.my.id"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2"
-                    >
-                      malesan.my.id
-                    </a>
-                  </p>
-                  {data.profile.linkedinUrl && (
-                    <p>
-                      <a
-                        href={data.profile.linkedinUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline underline-offset-2"
-                      >
-                        {data.profile.linkedinUrl.replace(/^https?:\/\/(www\.)?/, "")}
-                      </a>
+                  <div className="space-y-1">
+                    <p className="text-[11.5px] font-bold text-[#111111]">
+                      {locale === "en" ? "Creative & Leadership:" : "Kemampuan Non-Teknis:"}
                     </p>
-                  )}
-                  {visibleChannels.length > 0 && (
-                    <p className="text-[10px] text-[#4a4945] pt-0.5 leading-tight">
-                      {visibleChannels.map((c, idx) => (
-                        <span key={c.id}>
-                          {idx > 0 ? " • " : ""}
-                          <a href={c.url} target="_blank" rel="noopener noreferrer" className="underline">
-                            {c.handle}
-                          </a>
-                        </span>
+                    <ul className="list-disc pl-4 space-y-1 text-[11px] leading-[1.4] text-[#22211f]">
+                      {nonTechStrengths.map((s) => (
+                        <li key={s}>{s}</li>
                       ))}
-                      {" • "}
-                      <a href="https://vt.tiktok.com/ZSs6TdjHb/" target="_blank" rel="noopener noreferrer" className="underline">
-                        SanDisk (@eaonlineofficial)
-                      </a>
-                    </p>
-                  )}
+                    </ul>
+                  </div>
                 </div>
-              </div>
+              </section>
             </div>
-
-            {/* Right Column: Capabilities (Technical Stack + Core Strengths) */}
-            <div className="sm:col-span-7 print:col-span-7 sm:pl-5 print:pl-5 space-y-2">
-              <h2 className="font-display text-[15px] sm:text-[16px] font-extrabold tracking-tight text-[#111111]">
-                {locale === "en" ? "Capabilities" : "Kemampuan"}
-              </h2>
-
-              <div className="space-y-1">
-                <p className="text-[11px] font-bold text-[#111111]">
-                  {locale === "en" ? "Technical & AI Production:" : "Kemampuan Teknis & AI:"}
-                </p>
-                <ul className="list-disc pl-4 space-y-0.5 text-[10.8px] leading-snug text-[#22211f]">
-                  {data.toolGroups.map((group) => (
-                    <li key={group.id}>
-                      <strong className="text-[#111111]">{pickText(group.title, locale)}:</strong>{" "}
-                      {group.items.join(", ")}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="space-y-1">
-                <p className="text-[11px] font-bold text-[#111111]">
-                  {locale === "en" ? "Creative & Leadership:" : "Kemampuan Non-Teknis:"}
-                </p>
-                <ul className="list-disc pl-4 space-y-0.5 text-[10.8px] leading-snug text-[#22211f]">
-                  {nonTechStrengths.map((s) => (
-                    <li key={s}>{s}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
-        </article>
+          </article>
+        </div>
       </main>
     </div>
   );
