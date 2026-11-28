@@ -68,7 +68,7 @@ body {
 }
 
 .font-ats {
-  font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", Arial, system-ui, -apple-system, sans-serif;
+  font-family: var(--font-ats), "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -108,7 +108,7 @@ body {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 12mm 14mm;
+    margin: 13mm 15mm;
   }
 
   html,

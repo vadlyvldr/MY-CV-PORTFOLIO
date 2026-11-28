@@ -4,6 +4,7 @@ import {
   Instrument_Serif,
   JetBrains_Mono,
   Manrope,
+  Plus_Jakarta_Sans,
 } from "next/font/google";
 import "./globals.css";
 
@@ -36,6 +37,13 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-ats",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.vadlycv.my.id"),
   title: "Fadli — Creative Producer & AI-Assisted Video Strategist",
@@ -61,7 +69,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`dark ${bricolage.variable} ${instrumentSerif.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
+      className={`dark ${bricolage.variable} ${instrumentSerif.variable} ${manrope.variable} ${jetbrainsMono.variable} ${plusJakarta.variable}`}
     >
       <body className="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-white">
         {children}
