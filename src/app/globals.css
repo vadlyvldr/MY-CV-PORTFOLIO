@@ -101,14 +101,18 @@ body {
 
 @media print {
   @page {
-    size: A4;
-    margin: 11mm 14mm;
+    size: A4 portrait;
+    margin: 10mm 13mm;
   }
 
   html,
   body {
     background: #ffffff !important;
-    color: #111111 !important;
+    color: #141413 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .no-print {
@@ -119,7 +123,23 @@ body {
     box-shadow: none !important;
     border: none !important;
     padding: 0 !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
     max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .resume-block,
+  .resume-entry {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .resume-heading {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  a {
+    color: inherit !important;
   }
 }

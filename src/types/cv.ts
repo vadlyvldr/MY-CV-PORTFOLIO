@@ -56,6 +56,7 @@ export interface CaseStudyItem {
   impact: LocalizedText;
   thumbnail: string;
   youtubeId?: string;
+  tiktokId?: string;
   primaryUrl?: string;
   extraLinks?: CaseStudyLink[];
   tools: string[];

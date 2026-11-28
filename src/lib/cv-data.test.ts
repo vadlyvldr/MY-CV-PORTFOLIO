@@ -12,6 +12,7 @@ describe("cv-data integrity & helpers", () => {
     expect(res.ok).toBe(true);
     expect(data.profile.nickname).toBe("Fadli");
     expect(data.caseStudies.filter((c) => c.category === "short-form" && c.visible).length).toBeGreaterThanOrEqual(4);
+    expect(data.caseStudies.filter((c) => Boolean(c.tiktokId)).length).toBeGreaterThanOrEqual(4);
     expect(data.caseStudies.filter((c) => c.category === "youtube" && c.visible).length).toBeGreaterThanOrEqual(3);
     expect(JSON.stringify(data).toLowerCase()).not.toContain("paket c");
   });

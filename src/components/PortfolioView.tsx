@@ -28,7 +28,7 @@ import {
 } from "@/types/cv";
 import { notifyDraftUpdated, useCvDraftPreview } from "@/lib/use-cv-draft";
 import { ThemeLangControls, usePreferences } from "./ThemeLangControls";
-import { VideoModal } from "./VideoModal";
+import { VideoModal, VideoPreviewPayload } from "./VideoModal";
 
 const StudioStage3D = dynamic(
   () => import("./StudioStage3D").then((mod) => mod.StudioStage3D),
@@ -61,6 +61,7 @@ const UI_COPY = {
     groupReelsLabel: "Short-Form & Brand Campaigns",
     groupVisualLabel: "YouTube, AI Products & Studio",
     playPreview: "Play Video",
+    playReel: "Watch Reel",
     openChannel: "Open Source",
     expTitle: "Experience &",
     expTitleItalic: "Track Record",
@@ -101,6 +102,7 @@ const UI_COPY = {
     groupReelsLabel: "Kampanye Short-Form & Reels",
     groupVisualLabel: "YouTube, Produk AI & Studio",
     playPreview: "Putar Video",
+    playReel: "Putar Reel",
     openChannel: "Buka Tautan",
     expTitle: "Pengalaman &",
     expTitleItalic: "Rekam Jejak",
@@ -143,7 +145,7 @@ function CaseStudyCard({
   index: number;
   locale: Locale;
   copy: (typeof UI_COPY)["en"] | (typeof UI_COPY)["id"];
-  onPlayVideo: (id: string, title: string) => void;
+  onPlayVideo: (video: VideoPreviewPayload) => void;
 }) {
   const hasRealMedia = Boolean(cs.thumbnail);
   const indexLabel = String(index + 1).padStart(2, "0");
@@ -161,7 +163,14 @@ function CaseStudyCard({
           {cs.youtubeId && (
             <button
               type="button"
-              onClick={() => onPlayVideo(cs.youtubeId!, pickText(cs.title, locale))}
+              onClick={() =>
+                onPlayVideo({
+                  platform: "youtube",
+                  id: cs.youtubeId!,
+                  title: pickText(cs.title, locale),
+                  sourceUrl: cs.primaryUrl,
+                })
+              }
               className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-black/85 text-white text-xs font-semibold hover:bg-[var(--accent)] hover:text-[var(--accent-ink)] transition cursor-pointer"
             >
               <Play className="w-3.5 h-3.5 fill-current" />
@@ -221,14 +230,35 @@ function CaseStudyCard({
             </div>
           )}
 
-          {(cs.primaryUrl || (cs.extraLinks && cs.extraLinks.length > 0)) && (
+          {(cs.tiktokId || cs.primaryUrl || (cs.extraLinks && cs.extraLinks.length > 0)) && (
             <div className="flex flex-wrap gap-2">
+              {cs.tiktokId && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    onPlayVideo({
+                      platform: "tiktok",
+                      id: cs.tiktokId!,
+                      title: pickText(cs.title, locale),
+                      sourceUrl: cs.primaryUrl,
+                    })
+                  }
+                  className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-[var(--accent)] text-[var(--accent-ink)] text-xs font-semibold hover:bg-[var(--accent-hover)] transition cursor-pointer"
+                >
+                  <Play className="w-3 h-3 fill-current" />
+                  <span>{copy.playReel}</span>
+                </button>
+              )}
               {cs.primaryUrl && (
                 <a
                   href={cs.primaryUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 h-8 px-3 rounded-lg bg-[var(--accent-soft)] text-[var(--accent)] text-xs font-semibold hover:opacity-85 transition"
+                  className={`inline-flex items-center gap-1 h-8 px-3 rounded-lg text-xs font-semibold transition ${
+                    cs.tiktokId
+                      ? "border border-[var(--border-color)] bg-[var(--bg-page)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                      : "bg-[var(--accent-soft)] text-[var(--accent)] hover:opacity-85"
+                  }`}
                 >
                   <span>{copy.openChannel}</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -260,7 +290,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
   const [category, setCategory] = useState<"featured" | "all" | CaseStudyCategory>("featured");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAllExperiences, setShowAllExperiences] = useState(false);
-  const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
+  const [activeVideo, setActiveVideo] = useState<VideoPreviewPayload | null>(null);
   const heroRef = useRef<HTMLElement>(null);
   const portraitRef = useRef<HTMLDivElement>(null);
 
@@ -720,7 +750,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                           index={idx}
                           locale={locale}
                           copy={copy}
-                          onPlayVideo={(id, title) => setActiveVideo({ id, title })}
+                          onPlayVideo={(payload) => setActiveVideo(payload)}
                         />
                       ))}
                     </div>
@@ -742,7 +772,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                           index={reelCaseStudies.length + idx}
                           locale={locale}
                           copy={copy}
-                          onPlayVideo={(id, title) => setActiveVideo({ id, title })}
+                          onPlayVideo={(payload) => setActiveVideo(payload)}
                         />
                       ))}
                     </div>
@@ -975,8 +1005,7 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
       </footer>
 
       <VideoModal
-        youtubeId={activeVideo?.id || null}
-        title={activeVideo?.title || "Video Preview"}
+        video={activeVideo}
         onClose={() => setActiveVideo(null)}
       />
     </div>
