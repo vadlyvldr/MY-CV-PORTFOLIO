@@ -67,6 +67,12 @@ body {
   font-family: var(--font-mono), ui-monospace, monospace;
 }
 
+.font-ats {
+  font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", Arial, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
+  text-rendering: optimizeLegibility;
+}
+
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: var(--border-color) transparent;
@@ -119,22 +125,13 @@ body {
     display: none !important;
   }
 
-  .print-scale-outer {
-    height: auto !important;
-    width: 100% !important;
-    overflow: visible !important;
-  }
-
   .print-sheet {
-    transform: none !important;
     box-shadow: none !important;
     border: none !important;
     padding: 0 !important;
     margin: 0 auto !important;
     max-width: 100% !important;
     width: 100% !important;
-    min-height: 0 !important;
-    height: auto !important;
   }
 
   .resume-block,
