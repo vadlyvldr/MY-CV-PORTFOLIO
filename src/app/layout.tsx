@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import {
   Bricolage_Grotesque,
   Instrument_Serif,
+  Inter,
   JetBrains_Mono,
   Manrope,
-  Plus_Jakarta_Sans,
+  Poppins,
 } from "next/font/google";
 import "./globals.css";
 
@@ -37,10 +38,17 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
+const interAts = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-ats",
+  display: "swap",
+});
+
+const poppinsAts = Poppins({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-ats-display",
   display: "swap",
 });
 
@@ -69,7 +77,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`dark ${bricolage.variable} ${instrumentSerif.variable} ${manrope.variable} ${jetbrainsMono.variable} ${plusJakarta.variable}`}
+      className={`dark ${bricolage.variable} ${instrumentSerif.variable} ${manrope.variable} ${jetbrainsMono.variable} ${interAts.variable} ${poppinsAts.variable}`}
     >
       <body className="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-white">
         {children}

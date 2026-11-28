@@ -68,9 +68,12 @@ body {
 }
 
 .font-ats {
-  font-family: var(--font-ats), "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: subpixel-antialiased;
-  text-rendering: optimizeLegibility;
+  font-family: var(--font-ats), "Inter", system-ui, -apple-system, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+.font-ats-display {
+  font-family: var(--font-ats-display), "Poppins", "Inter", system-ui, -apple-system, sans-serif;
 }
 
 .custom-scrollbar {

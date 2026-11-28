@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -28,6 +29,7 @@ import {
 } from "@/types/cv";
 import { notifyDraftUpdated, useCvDraftPreview } from "@/lib/use-cv-draft";
 import { ThemeLangControls, usePreferences } from "./ThemeLangControls";
+import { ResumeLanguageModal } from "./ResumeLanguageModal";
 import { VideoModal, VideoPreviewPayload } from "./VideoModal";
 
 const StudioStage3D = dynamic(
@@ -285,12 +287,14 @@ function CaseStudyCard({
 }
 
 export function PortfolioView({ initialData }: PortfolioViewProps) {
+  const router = useRouter();
   const { locale, setLocale, theme, toggleTheme } = usePreferences();
   const { data, isDraftPreview } = useCvDraftPreview(initialData);
   const [category, setCategory] = useState<"featured" | "all" | CaseStudyCategory>("featured");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAllExperiences, setShowAllExperiences] = useState(false);
   const [activeVideo, setActiveVideo] = useState<VideoPreviewPayload | null>(null);
+  const [resumeModalOpen, setResumeModalOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const portraitRef = useRef<HTMLDivElement>(null);
 
@@ -457,9 +461,13 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
             <a href="#contact" className="hover:text-[var(--text-primary)] transition">
               {copy.navContact}
             </a>
-            <Link href="/cv" className="hover:text-[var(--text-primary)] transition">
+            <button
+              type="button"
+              onClick={() => setResumeModalOpen(true)}
+              className="hover:text-[var(--text-primary)] cursor-pointer transition"
+            >
               {copy.navCv}
-            </Link>
+            </button>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -469,13 +477,14 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
               theme={theme}
               onToggleTheme={toggleTheme}
             />
-            <Link
-              href="/cv"
-              className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--accent-ink)] text-xs font-semibold transition shrink-0"
+            <button
+              type="button"
+              onClick={() => setResumeModalOpen(true)}
+              className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--accent-ink)] text-xs font-semibold cursor-pointer transition shrink-0"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>{copy.downloadCv}</span>
-            </Link>
+            </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen((v) => !v)}
@@ -517,14 +526,17 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
             >
               {copy.navContact}
             </a>
-            <Link
-              href="/cv"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-[var(--accent)] text-[var(--accent-ink)] text-sm font-semibold"
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setResumeModalOpen(true);
+              }}
+              className="w-full flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-[var(--accent)] text-[var(--accent-ink)] text-sm font-semibold cursor-pointer"
             >
               <FileText className="w-4 h-4" />
               <span>{copy.downloadCv}</span>
-            </Link>
+            </button>
           </div>
         )}
       </header>
@@ -572,13 +584,14 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
               </div>
 
               <div className="hero-entrance flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
-                <Link
-                  href="/cv"
-                  className="inline-flex items-center justify-center gap-2 h-11 px-4 sm:px-5 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--accent-ink)] text-sm font-semibold transition"
+                <button
+                  type="button"
+                  onClick={() => setResumeModalOpen(true)}
+                  className="inline-flex items-center justify-center gap-2 h-11 px-4 sm:px-5 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--accent-ink)] text-sm font-semibold cursor-pointer transition"
                 >
                   <FileText className="w-4 h-4" />
                   <span>{copy.downloadCv}</span>
-                </Link>
+                </button>
                 <a
                   href="#contact"
                   className="inline-flex items-center justify-center gap-2 h-11 px-4 sm:px-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-[var(--text-primary)] text-[var(--text-primary)] text-sm font-semibold transition"
@@ -984,13 +997,14 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
                     <ArrowUpRight className="w-4 h-4" />
                   </a>
                 )}
-                <Link
-                  href="/cv"
-                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-page)] hover:border-[var(--accent)] text-[var(--text-primary)] text-sm font-semibold transition"
+                <button
+                  type="button"
+                  onClick={() => setResumeModalOpen(true)}
+                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-page)] hover:border-[var(--accent)] text-[var(--text-primary)] text-sm font-semibold cursor-pointer transition"
                 >
                   <FileText className="w-4 h-4" />
                   <span>{copy.atsAction}</span>
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -1007,9 +1021,13 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
             <span>{pickText(data.profile.location, locale)}</span>
           </div>
           <div className="flex items-center gap-5">
-            <Link href="/cv" className="hover:text-[var(--text-primary)] transition">
+            <button
+              type="button"
+              onClick={() => setResumeModalOpen(true)}
+              className="hover:text-[var(--text-primary)] cursor-pointer transition"
+            >
               {copy.navCv}
-            </Link>
+            </button>
             <Link
               href="/admin"
               className="inline-flex items-center gap-1 hover:text-[var(--text-primary)] transition"
@@ -1024,6 +1042,22 @@ export function PortfolioView({ initialData }: PortfolioViewProps) {
       <VideoModal
         video={activeVideo}
         onClose={() => setActiveVideo(null)}
+      />
+
+      <ResumeLanguageModal
+        open={resumeModalOpen}
+        locale={locale}
+        onClose={() => setResumeModalOpen(false)}
+        onPrintLanguage={(lang) => {
+          setLocale(lang);
+          setResumeModalOpen(false);
+          router.push(`/cv?lang=${lang}&autoprint=1`);
+        }}
+        onPreviewLanguage={(lang) => {
+          setLocale(lang);
+          setResumeModalOpen(false);
+          router.push(`/cv?lang=${lang}`);
+        }}
       />
     </div>
   );
