@@ -26,9 +26,21 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
     : [];
 
   const isOnePage = density === "one-page";
-  // Keep 6 core roles (incl. D'Kopian Cafe Manager) with concise impact bullets in 1-Page mode
-  const primaryExperiences = isOnePage ? visibleExperiences.slice(0, 6) : visibleExperiences;
-  const earlierExperiences = isOnePage ? visibleExperiences.slice(6) : [];
+  // In 1-Page A4 mode, feature 5 primary/management roles (incl. D'Kopian Cafe Manager 2022,
+  // located cleanly without spilling onto Page 2) and condense remaining roles into 1 footer line.
+  const onePageIds = [
+    "exp-creative-producer",
+    "exp-ai-builder",
+    "exp-live-host",
+    "exp-game-admin",
+    "exp-cafe-manager",
+  ];
+  const primaryExperiences = isOnePage
+    ? visibleExperiences.filter((e) => onePageIds.includes(e.id))
+    : visibleExperiences;
+  const earlierExperiences = isOnePage
+    ? visibleExperiences.filter((e) => !onePageIds.includes(e.id))
+    : [];
 
   const nonTechStrengths =
     locale === "en"
@@ -136,7 +148,7 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
           {/* Editorial Poster Masthead: B&W Portrait Left + Bold Stacked Name Right */}
           <header className="resume-block flex flex-col sm:flex-row print:flex-row items-start sm:items-center print:items-center gap-4 sm:gap-6 print:gap-5">
             {showPhoto && (
-              <div className="shrink-0 w-[88px] h-[108px] sm:w-[96px] sm:h-[116px] print:w-[92px] print:h-[112px] bg-[#0b0b0d] overflow-hidden border border-[#111111]/15">
+              <div className="shrink-0 w-[84px] h-[102px] sm:w-[90px] sm:h-[110px] print:w-[86px] print:h-[104px] bg-[#0b0b0d] overflow-hidden border border-[#111111]/15">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={data.profile.avatarUrl || "/images/profile-main.png"}
@@ -197,15 +209,16 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
             </h2>
 
             <div className={isOnePage ? "space-y-1.5" : "space-y-3"}>
-              {primaryExperiences.map((exp) => {
+              {primaryExperiences.map((exp, idx) => {
                 const rawBullets = pickList(exp.bullets, locale);
-                const bulletsToShow = isOnePage ? rawBullets.slice(0, 2) : rawBullets;
+                // Top 2 core roles get 2 impact bullets in 1-Page A4; supporting roles get 1 sharp line
+                const bulletsToShow = isOnePage ? rawBullets.slice(0, idx < 2 ? 2 : 1) : rawBullets;
                 return (
                   <div key={exp.id} className="resume-entry space-y-0.5">
                     <div className="flex flex-col sm:flex-row print:flex-row sm:items-baseline print:items-baseline sm:justify-between print:justify-between gap-0.5">
                       <h3
                         className={`${
-                          isOnePage ? "text-[11.8px]" : "text-[12.8px]"
+                          isOnePage ? "text-[11.5px]" : "text-[12.8px]"
                         } font-bold text-[#111111]`}
                       >
                         {pickText(exp.role, locale)} —{" "}
@@ -218,7 +231,7 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
                     <ul
                       className={`list-disc pl-4 ${
                         isOnePage
-                          ? "space-y-0 text-[10.8px] leading-[1.34]"
+                          ? "space-y-0 text-[10.5px] leading-[1.32]"
                           : "space-y-0.5 text-[11.8px] leading-snug"
                       } text-[#22211f]`}
                     >
@@ -231,9 +244,9 @@ export function AtsResumeView({ initialData }: AtsResumeViewProps) {
               })}
 
               {earlierExperiences.length > 0 && (
-                <p className="resume-entry text-[10.5px] text-[#3a3936] pt-0.5 border-t border-[#e5e3dc]">
+                <p className="resume-entry text-[10.2px] text-[#3a3936] pt-1 border-t border-[#e5e3dc] leading-snug">
                   <strong className="text-[#111111]">
-                    {locale === "en" ? "Earlier Creative Roles (2021–2022): " : "Pengalaman Awal (2021–2022): "}
+                    {locale === "en" ? "Earlier Creative Roles: " : "Pengalaman Awal: "}
                   </strong>
                   {earlierExperiences
                     .map(
